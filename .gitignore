@@ -1,0 +1,9 @@
+# Log ของ Airflow — สร้างใหม่ทุกครั้งที่รัน ไม่ควรเก็บใน repo
+logs/
+
+# Python bytecode
+__pycache__/
+*.py[cod]
+
+# ไฟล์สำรองระหว่างแก้
+*.bak

@@ -1,0 +1,346 @@
+{
+  "name": "COVID19-Thailand",
+  "compatibilityLevel": 1567,
+  "model": {
+    "culture": "th-TH",
+    "dataAccessOptions": {
+      "legacyRedirects": true,
+      "returnErrorValuesAsNull": true
+    },
+    "defaultPowerBIDataSourceVersion": "powerBI_V3",
+    "sourceQueryCulture": "th-TH",
+    "tables": [
+      {
+        "name": "fact_covid_cases",
+        "columns": [
+          {
+            "name": "วันที่",
+            "dataType": "dateTime",
+            "formatString": "yyyy-mm-dd",
+            "sourceColumn": "วันที่",
+            "summarizeBy": "none",
+            "annotations": [
+              { "name": "SummarizationSetBy", "value": "Automatic" },
+              { "name": "UnderlyingDateTimeDataType", "value": "Date" }
+            ]
+          },
+          {
+            "name": "จังหวัด",
+            "dataType": "string",
+            "sourceColumn": "จังหวัด",
+            "summarizeBy": "none",
+            "annotations": [ { "name": "SummarizationSetBy", "value": "Automatic" } ]
+          },
+          {
+            "name": "เพศ",
+            "dataType": "string",
+            "sourceColumn": "เพศ",
+            "summarizeBy": "none",
+            "annotations": [ { "name": "SummarizationSetBy", "value": "Automatic" } ]
+          },
+          {
+            "name": "ช่วงอายุ",
+            "dataType": "string",
+            "sourceColumn": "ช่วงอายุ",
+            "summarizeBy": "none",
+            "annotations": [ { "name": "SummarizationSetBy", "value": "Automatic" } ]
+          },
+          {
+            "name": "สัญชาติ",
+            "dataType": "string",
+            "sourceColumn": "สัญชาติ",
+            "summarizeBy": "none",
+            "annotations": [ { "name": "SummarizationSetBy", "value": "Automatic" } ]
+          },
+          {
+            "name": "จำนวนผู้ป่วย",
+            "dataType": "int64",
+            "formatString": "#,0",
+            "sourceColumn": "จำนวนผู้ป่วย",
+            "summarizeBy": "sum",
+            "annotations": [ { "name": "SummarizationSetBy", "value": "Automatic" } ]
+          }
+        ],
+        "measures": [
+          {
+            "name": "ผู้ป่วยสะสม",
+            "expression": "SUM(fact_covid_cases[จำนวนผู้ป่วย])",
+            "formatString": "#,0"
+          },
+          {
+            "name": "เฉลี่ย 7 วัน",
+            "expression": [
+              "VAR MaxDay = MAX(dim_date[วันที่])",
+              "RETURN",
+              "DIVIDE(",
+              "    CALCULATE(",
+              "        [ผู้ป่วยสะสม],",
+              "        FILTER(",
+              "            ALL(dim_date),",
+              "            dim_date[วันที่] <= MaxDay && dim_date[วันที่] > MaxDay - 7",
+              "        )",
+              "    ),",
+              "    7",
+              ")"
+            ],
+            "formatString": "#,0.0"
+          },
+          {
+            "name": "จำนวนจังหวัด",
+            "expression": "DISTINCTCOUNT(fact_covid_cases[จังหวัด])",
+            "formatString": "#,0"
+          },
+          {
+            "name": "วันที่พบสูงสุด",
+            "expression": [
+              "VAR PeakCases = MAXX(VALUES(dim_date[วันที่]), [ผู้ป่วยสะสม])",
+              "RETURN",
+              "MAXX(",
+              "    FILTER(VALUES(dim_date[วันที่]), [ผู้ป่วยสะสม] = PeakCases),",
+              "    dim_date[วันที่]",
+              ")"
+            ],
+            "formatString": "yyyy-mm-dd"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "fact_covid_cases",
+            "mode": "import",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = Csv.Document(File.Contents(\"D:\\data1\\95-\\exports\\fact_covid_cases.csv\"),[Delimiter=\",\", Columns=6, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),",
+                "    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),",
+                "    Typed = Table.TransformColumnTypes(Headers,{{\"วันที่\", type date}, {\"จังหวัด\", type text}, {\"เพศ\", type text}, {\"ช่วงอายุ\", type text}, {\"สัญชาติ\", type text}, {\"จำนวนผู้ป่วย\", Int64.Type}}, \"en-US\")",
+                "in",
+                "    Typed"
+              ]
+            }
+          }
+        ],
+        "annotations": [ { "name": "PBI_ResultType", "value": "Table" } ]
+      },
+      {
+        "name": "dim_date",
+        "columns": [
+          {
+            "name": "วันที่",
+            "dataType": "dateTime",
+            "formatString": "yyyy-mm-dd",
+            "sourceColumn": "วันที่",
+            "summarizeBy": "none",
+            "annotations": [
+              { "name": "SummarizationSetBy", "value": "Automatic" },
+              { "name": "UnderlyingDateTimeDataType", "value": "Date" }
+            ]
+          },
+          {
+            "name": "ปี ค.ศ.",
+            "dataType": "int64",
+            "formatString": "0",
+            "sourceColumn": "ปี ค.ศ.",
+            "summarizeBy": "none",
+            "annotations": [ { "name": "SummarizationSetBy", "value": "User" } ]
+          },
+          {
+            "name": "ปี พ.ศ.",
+            "dataType": "int64",
+            "formatString": "0",
+            "sourceColumn": "ปี พ.ศ.",
+            "summarizeBy": "none",
+            "annotations": [ { "name": "SummarizationSetBy", "value": "User" } ]
+          },
+          {
+            "name": "เลขเดือน",
+            "dataType": "int64",
+            "formatString": "0",
+            "sourceColumn": "เลขเดือน",
+            "summarizeBy": "none",
+            "annotations": [ { "name": "SummarizationSetBy", "value": "User" } ]
+          },
+          {
+            "name": "เดือน",
+            "dataType": "string",
+            "sourceColumn": "เดือน",
+            "sortByColumn": "เลขเดือน",
+            "summarizeBy": "none",
+            "annotations": [ { "name": "SummarizationSetBy", "value": "Automatic" } ]
+          },
+          {
+            "name": "ปีเดือน",
+            "dataType": "string",
+            "sourceColumn": "ปีเดือน",
+            "summarizeBy": "none",
+            "annotations": [ { "name": "SummarizationSetBy", "value": "Automatic" } ]
+          },
+          {
+            "name": "ไตรมาส",
+            "dataType": "int64",
+            "formatString": "0",
+            "sourceColumn": "ไตรมาส",
+            "summarizeBy": "none",
+            "annotations": [ { "name": "SummarizationSetBy", "value": "User" } ]
+          },
+          {
+            "name": "วันในสัปดาห์",
+            "dataType": "string",
+            "sourceColumn": "วันในสัปดาห์",
+            "summarizeBy": "none",
+            "annotations": [ { "name": "SummarizationSetBy", "value": "Automatic" } ]
+          },
+          {
+            "name": "วันหยุดสุดสัปดาห์",
+            "dataType": "boolean",
+            "formatString": "\"TRUE\";\"TRUE\";\"FALSE\"",
+            "sourceColumn": "วันหยุดสุดสัปดาห์",
+            "summarizeBy": "none",
+            "annotations": [ { "name": "SummarizationSetBy", "value": "Automatic" } ]
+          }
+        ],
+        "partitions": [
+          {
+            "name": "dim_date",
+            "mode": "import",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = Csv.Document(File.Contents(\"D:\\data1\\95-\\exports\\dim_date.csv\"),[Delimiter=\",\", Columns=9, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),",
+                "    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),",
+                "    Typed = Table.TransformColumnTypes(Headers,{{\"วันที่\", type date}, {\"ปี ค.ศ.\", Int64.Type}, {\"ปี พ.ศ.\", Int64.Type}, {\"เลขเดือน\", Int64.Type}, {\"เดือน\", type text}, {\"ปีเดือน\", type text}, {\"ไตรมาส\", Int64.Type}, {\"วันในสัปดาห์\", type text}, {\"วันหยุดสุดสัปดาห์\", type logical}}, \"en-US\")",
+                "in",
+                "    Typed"
+              ]
+            }
+          }
+        ],
+        "annotations": [ { "name": "PBI_ResultType", "value": "Table" } ]
+      },
+      {
+        "name": "dim_province",
+        "columns": [
+          {
+            "name": "จังหวัด",
+            "dataType": "string",
+            "sourceColumn": "จังหวัด",
+            "summarizeBy": "none",
+            "annotations": [ { "name": "SummarizationSetBy", "value": "Automatic" } ]
+          },
+          {
+            "name": "ผู้ป่วยสะสม",
+            "dataType": "int64",
+            "formatString": "#,0",
+            "sourceColumn": "ผู้ป่วยสะสม",
+            "summarizeBy": "sum",
+            "annotations": [ { "name": "SummarizationSetBy", "value": "Automatic" } ]
+          },
+          {
+            "name": "อันดับ",
+            "dataType": "int64",
+            "formatString": "0",
+            "sourceColumn": "อันดับ",
+            "summarizeBy": "none",
+            "annotations": [ { "name": "SummarizationSetBy", "value": "User" } ]
+          }
+        ],
+        "partitions": [
+          {
+            "name": "dim_province",
+            "mode": "import",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = Csv.Document(File.Contents(\"D:\\data1\\95-\\exports\\dim_province.csv\"),[Delimiter=\",\", Columns=3, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),",
+                "    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),",
+                "    Typed = Table.TransformColumnTypes(Headers,{{\"จังหวัด\", type text}, {\"ผู้ป่วยสะสม\", Int64.Type}, {\"อันดับ\", Int64.Type}}, \"en-US\")",
+                "in",
+                "    Typed"
+              ]
+            }
+          }
+        ],
+        "annotations": [ { "name": "PBI_ResultType", "value": "Table" } ]
+      },
+      {
+        "name": "dim_age_group",
+        "columns": [
+          {
+            "name": "ช่วงอายุ",
+            "dataType": "string",
+            "sourceColumn": "ช่วงอายุ",
+            "sortByColumn": "ลำดับ",
+            "summarizeBy": "none",
+            "annotations": [ { "name": "SummarizationSetBy", "value": "Automatic" } ]
+          },
+          {
+            "name": "ลำดับ",
+            "dataType": "int64",
+            "formatString": "0",
+            "sourceColumn": "ลำดับ",
+            "summarizeBy": "none",
+            "annotations": [ { "name": "SummarizationSetBy", "value": "User" } ]
+          },
+          {
+            "name": "ผู้ป่วยสะสม",
+            "dataType": "int64",
+            "formatString": "#,0",
+            "sourceColumn": "ผู้ป่วยสะสม",
+            "summarizeBy": "sum",
+            "annotations": [ { "name": "SummarizationSetBy", "value": "Automatic" } ]
+          }
+        ],
+        "partitions": [
+          {
+            "name": "dim_age_group",
+            "mode": "import",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = Csv.Document(File.Contents(\"D:\\data1\\95-\\exports\\dim_age_group.csv\"),[Delimiter=\",\", Columns=3, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),",
+                "    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),",
+                "    Typed = Table.TransformColumnTypes(Headers,{{\"ช่วงอายุ\", type text}, {\"ลำดับ\", Int64.Type}, {\"ผู้ป่วยสะสม\", Int64.Type}}, \"en-US\")",
+                "in",
+                "    Typed"
+              ]
+            }
+          }
+        ],
+        "annotations": [ { "name": "PBI_ResultType", "value": "Table" } ]
+      }
+    ],
+    "relationships": [
+      {
+        "name": "fact_to_dim_date",
+        "fromTable": "fact_covid_cases",
+        "fromColumn": "วันที่",
+        "toTable": "dim_date",
+        "toColumn": "วันที่"
+      },
+      {
+        "name": "fact_to_dim_province",
+        "fromTable": "fact_covid_cases",
+        "fromColumn": "จังหวัด",
+        "toTable": "dim_province",
+        "toColumn": "จังหวัด"
+      },
+      {
+        "name": "fact_to_dim_age_group",
+        "fromTable": "fact_covid_cases",
+        "fromColumn": "ช่วงอายุ",
+        "toTable": "dim_age_group",
+        "toColumn": "ช่วงอายุ"
+      }
+    ],
+    "annotations": [
+      {
+        "name": "PBI_QueryOrder",
+        "value": "[\"fact_covid_cases\",\"dim_date\",\"dim_province\",\"dim_age_group\"]"
+      },
+      { "name": "__PBI_TimeIntelligenceEnabled", "value": "0" }
+    ]
+  }
+}

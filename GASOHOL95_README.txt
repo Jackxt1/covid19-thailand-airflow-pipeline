@@ -25,3 +25,145 @@ Gasohol 95 ML Pipeline - v3
 - ราคา Gasohol 95 จาก Money Buffalo เป็นราคาขายปลีกที่แสดงในตารางย้อนหลัง
 - EPPO ใช้ราคา PTT เพื่อเติมช่วงวันที่เก่ากว่า
 - ไม่สร้างข้อมูลปลอมเพื่อให้ครบจำนวนวัน
+
+================================================================
+COVID-19 Dashboard Pipeline (เพิ่มเติม)
+================================================================
+
+จุดประสงค์
+- ทำ ETL ข้อมูลผู้ป่วยยืนยันโควิด-19 ของกรมควบคุมโรค (ไฟล์ Excel)
+  ลง PostgreSQL แล้วสรุปเป็นแดชบอร์ดกราฟ
+
+ไฟล์ที่เกี่ยวข้อง
+- dags/ml_04_covid_dashboard.py   DAG ชื่อ covid_dashboard_pipeline
+- model_service/covid.py          router + หน้าเว็บแดชบอร์ด
+- docker-compose.yaml             mount โฟลเดอร์ข้อมูล + เพิ่ม openpyxl
+
+แหล่งข้อมูล
+- ไฟล์ confirmed-cases*.xlsx 5 ไฟล์ รวม 4,262,484 แถว
+  mount เข้าคอนเทนเนอร์ที่ /opt/airflow/data/covid (อ่านอย่างเดียว)
+- เปลี่ยนตำแหน่งโฟลเดอร์ได้ด้วยตัวแปร COVID_DATA_DIR เช่น
+  COVID_DATA_DIR=D:/Darta docker compose up -d
+
+ขั้นตอนใน DAG
+1. check_source_files  ตรวจว่าไฟล์ต้นทางครบ ขาดไฟล์ไหน fail ทันที
+2. create_raw_table    สร้างตาราง covid_cases_raw ใหม่ (รันซ้ำได้ไม่ซ้ำข้อมูล)
+3. load_raw__*         5 task ขนานกัน อ่าน Excel แบบ streaming (openpyxl
+                       read_only) แล้ว INSERT ทีละ 50,000 แถว ไม่โหลดทั้ง
+                       ไฟล์เข้าหน่วยความจำ
+4. clean_transform     แปลง Excel serial เป็นวันที่, normalize เพศ,
+                       รวมสัญชาติที่สะกดต่างกัน (Thai/Thailand,
+                       Burmese/Burma), ตัดอายุนอกช่วง 0-120,
+                       ตัดเคสซ้ำด้วย case_no -> ตาราง covid_cases
+5. build_aggregates    สร้างตารางสรุป covid_daily, covid_by_province,
+                       covid_by_age_group, covid_by_sex,
+                       covid_by_nationality, covid_summary
+6. data_quality_check  ตรวจแถวว่าง, case_no ซ้ำ, วันที่ null, อายุนอกช่วง
+                       ไม่ผ่านข้อใด DAG fail
+7. log_result          สรุปผลการรันลง log
+
+หมายเหตุผลการรันจริง
+- ทั้ง 5 ไฟล์ไม่มี case_no ซ้ำกันเลย จำนวนแถวหลังทำความสะอาดจึงเท่ากับ
+  แถวดิบพอดี (4,262,484) ขั้นตัดซ้ำยังคงไว้เพื่อกันข้อมูลชุดใหม่ที่อาจทับกัน
+- ช่วงข้อมูล 12 ม.ค. 2563 ถึง 1 พ.ค. 2565 รวม 785 วัน
+- โหลดครบทั้ง 4.26 ล้านแถวใช้เวลาประมาณ 3 นาที
+
+วิธีรัน
+1) docker compose up -d
+2) ตั้ง Airflow Connection ชื่อ postgres_target (ทำครั้งเดียว):
+   docker exec airflow_webserver airflow connections add postgres_target \
+     --conn-type postgres --conn-host postgres_target --conn-port 5432 \
+     --conn-schema etl_db --conn-login etluser --conn-password etlpass
+3) เปิด http://localhost:8080 (airflow/airflow) unpause แล้วสั่งรัน
+   covid_dashboard_pipeline
+4) เปิดแดชบอร์ดที่ http://localhost:8001/covid
+
+Endpoint ที่หน้าเว็บเรียกใช้
+- GET /api/covid/summary         ตัวเลขสรุปรวม
+- GET /api/covid/daily           เคสรายวัน + ค่าเฉลี่ย 7 วัน
+- GET /api/covid/provinces       จังหวัดเรียงตามจำนวน
+- GET /api/covid/age-groups      กลุ่มอายุ
+- GET /api/covid/sex             สัดส่วนเพศ
+- GET /api/covid/nationalities   สัญชาติ
+
+----------------------------------------------------------------
+ไฟล์สำหรับ Power BI
+----------------------------------------------------------------
+
+task export_for_powerbi ใน DAG จะเขียนไฟล์ CSV ลงโฟลเดอร์ exports/
+ทุกครั้งที่ pipeline รันสำเร็จ ทุกไฟล์เป็น UTF-8 พร้อม BOM จึงเปิดภาษาไทย
+ได้ถูกต้องโดยไม่ต้องเลือก encoding เอง
+
+ไฟล์ที่ได้
+- fact_covid_cases.csv   450,336 แถว (29 MB) ตารางข้อเท็จจริง
+                         ระดับ วัน x จังหวัด x เพศ x ช่วงอายุ x สัญชาติ
+                         คอลัมน์วัดคือ "จำนวนผู้ป่วย" รวมได้ 4,262,484
+- dim_date.csv           841 แถว มิติวันที่ มีปี พ.ศ./ค.ศ., เดือนไทย,
+                         ไตรมาส, วันในสัปดาห์, วันหยุดสุดสัปดาห์
+- dim_province.csv       80 แถว มิติจังหวัด พร้อมอันดับ
+- dim_age_group.csv      9 แถว มิติช่วงอายุ พร้อมคอลัมน์ "ลำดับ"
+- summary_daily.csv      785 แถว เคสรายวัน + ค่าเฉลี่ย 7 วัน
+- summary_overall.csv    1 แถว ตัวเลขสรุปรวม
+
+ขั้นตอนใน Power BI Desktop
+1) Get Data > Text/CSV เลือกไฟล์ทีละไฟล์ 6 รอบ
+   (ห้ามใช้ Get Data > Folder กับโฟลเดอร์นี้ เพราะไฟล์คนละโครงสร้างกัน
+   การกด Combine จะรวมเป็นตารางเดียวที่ใช้ไม่ได้)
+2) ตรวจที่ Transform Data ว่าคอลัมน์ "วันที่" เป็นชนิด Date และ
+   "จำนวนผู้ป่วย" เป็น Whole Number
+3) Model view: ลากสร้างความสัมพันธ์แบบ one-to-many
+     dim_date["วันที่"]        -> fact_covid_cases["วันที่"]
+     dim_province["จังหวัด"]   -> fact_covid_cases["จังหวัด"]
+     dim_age_group["ช่วงอายุ"] -> fact_covid_cases["ช่วงอายุ"]
+4) เลือกตาราง dim_age_group คอลัมน์ "ช่วงอายุ" แล้วกด
+   Column tools > Sort by column > "ลำดับ"
+   (ถ้าไม่ทำ แกนกราฟจะเรียง 0-9, 10-19, 70+ ตามตัวอักษร ซึ่งผิดลำดับ)
+5) ทำ measure พื้นฐาน
+     ผู้ป่วยสะสม = SUM(fact_covid_cases[จำนวนผู้ป่วย])
+     เฉลี่ย 7 วัน = AVERAGEX(DATESINPERIOD(dim_date[วันที่],
+                     MAX(dim_date[วันที่]), -7, DAY), [ผู้ป่วยสะสม])
+
+ถ้าอยากต่อฐานข้อมูลสดแทนการใช้ไฟล์
+Get Data > PostgreSQL database
+  Server   : localhost:5433
+  Database : etl_db
+  Username : etluser
+  Password : etlpass
+แล้วเลือกตาราง covid_cases หรือตารางสรุป covid_* ได้โดยตรง
+
+----------------------------------------------------------------
+ไฟล์โปรเจกต์ Power BI สำเร็จรูป (powerbi/)
+----------------------------------------------------------------
+
+เปิดไฟล์ powerbi/COVID19-Thailand.pbip ด้วย Power BI Desktop
+ได้โมเดลและหน้ารายงานครบโดยไม่ต้องตั้งค่าเอง
+
+สิ่งที่มีมาให้แล้ว
+- ตาราง 4 ตาราง (fact_covid_cases, dim_date, dim_province, dim_age_group)
+  ดึงจากไฟล์ CSV ในโฟลเดอร์ exports/
+- ความสัมพันธ์ครบ 3 เส้น fact -> dim ทั้งสาม
+- dim_age_group["ช่วงอายุ"] ตั้ง Sort by column เป็น "ลำดับ" ไว้แล้ว
+  แกนกราฟจึงเรียง 0-9, 10-19, ... 70+ ถูกต้องตั้งแต่แรก
+- dim_date["เดือน"] ตั้ง Sort by column เป็น "เลขเดือน" ไว้แล้ว
+- measure 4 ตัว: ผู้ป่วยสะสม, เฉลี่ย 7 วัน, จำนวนจังหวัด, วันที่พบสูงสุด
+- หน้ารายงาน "ภาพรวมโควิด-19" มี 8 visual
+  (ตัวกรองปี พ.ศ., การ์ด 3 ใบ, กราฟเส้นรายวัน, แท่งจังหวัด,
+   แท่งช่วงอายุ, โดนัทสัดส่วนเพศ)
+
+สิ่งที่ต้องทำเองหนึ่งครั้งหลังเปิด
+- กด Refresh now บนแถบแจ้งเตือนด้านบน หรือ Home > Refresh
+  รูปแบบ .pbip เก็บแต่โครงสร้าง ไม่เก็บข้อมูล จึงต้องโหลด CSV
+  เข้ามาครั้งแรกเสมอ (ประมาณ 1-2 นาที สำหรับ 450,336 แถว)
+- ถ้าอยากได้ไฟล์ที่เปิดแล้วมีข้อมูลเลย ให้ File > Save as
+  แล้วเลือกนามสกุล .pbix หลังจาก refresh เสร็จ
+
+ถ้าย้ายโฟลเดอร์โปรเจกต์
+พาธของไฟล์ CSV เขียนไว้แบบเต็มใน powerbi/COVID19-Thailand.Dataset/model.bim
+(D:\data1\95-\exports\...) ถ้าย้ายที่เก็บข้อมูล ต้องแก้พาธในไฟล์นั้น
+หรือแก้ใน Power BI ที่ Transform data > Data source settings
+
+ข้อควรระวังที่เจอมาแล้ว
+- ห้ามใช้ Get Data > Folder กับโฟลเดอร์ exports เพราะไฟล์ทั้ง 6
+  คนละโครงสร้าง การกด Combine จะได้ตารางพัง ถ้าจะโหลดเองให้ใช้
+  Get Data > Text/CSV ทีละไฟล์
+- ชื่อตัวแปร VAR ใน DAX ใช้ภาษาไทยไม่ได้ ต้องเป็นอักษรอังกฤษ

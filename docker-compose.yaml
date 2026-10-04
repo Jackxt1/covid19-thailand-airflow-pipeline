@@ -42,13 +42,15 @@ x-airflow-common:
     AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
     AIRFLOW__API__AUTH_BACKENDS: 'airflow.api.auth.backend.basic_auth,airflow.api.auth.backend.session'
     AIRFLOW__SCHEDULER__ENABLE_HEALTH_CHECK: 'true'
-    _PIP_ADDITIONAL_REQUIREMENTS: ${_PIP_ADDITIONAL_REQUIREMENTS:-beautifulsoup4 pandas sqlalchemy psycopg2-binary requests apache-airflow-providers-postgres scikit-learn joblib yfinance}
+    _PIP_ADDITIONAL_REQUIREMENTS: ${_PIP_ADDITIONAL_REQUIREMENTS:-beautifulsoup4 pandas sqlalchemy psycopg2-binary requests apache-airflow-providers-postgres scikit-learn joblib yfinance openpyxl}
   volumes:
     - ${AIRFLOW_PROJ_DIR:-.}/dags:/opt/airflow/dags
     - ${AIRFLOW_PROJ_DIR:-.}/logs:/opt/airflow/logs
     - ${AIRFLOW_PROJ_DIR:-.}/config:/opt/airflow/config
     - ${AIRFLOW_PROJ_DIR:-.}/plugins:/opt/airflow/plugins
     - ${AIRFLOW_PROJ_DIR:-.}/models:/opt/airflow/models
+    - ${COVID_DATA_DIR:-D:/Darta}:/opt/airflow/data/covid:ro
+    - ${AIRFLOW_PROJ_DIR:-.}/exports:/opt/airflow/exports
   user: "${AIRFLOW_UID:-50000}:0"
   depends_on:
     &airflow-common-depends-on
@@ -229,6 +231,15 @@ services:
   model_api:
     build: ./model_service
     container_name: model_api
+    environment:
+      ETL_DB_HOST: postgres_target
+      ETL_DB_PORT: "5432"
+      ETL_DB_NAME: etl_db
+      ETL_DB_USER: etluser
+      ETL_DB_PASSWORD: etlpass
+    depends_on:
+      postgres_target:
+        condition: service_healthy
     ports:
       - "8001:8000"   # host:container -> เปิดเว็บทดสอบที่ http://localhost:8001
     volumes:

@@ -17,6 +17,7 @@ from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
 
 from oil import router as oil_router, oil_model_file_info, OIL_FORM_HTML
+from covid import router as covid_router, covid_pipeline_status
 
 
 app = FastAPI(
@@ -26,6 +27,9 @@ app = FastAPI(
 
 # เพิ่ม endpoint /predict_oil จาก oil.py
 app.include_router(oil_router)
+
+# เพิ่มหน้าแดชบอร์ด /covid และ endpoint /api/covid/* จาก covid.py
+app.include_router(covid_router)
 
 
 @app.get("/health")
@@ -37,6 +41,7 @@ def health():
     return {
         "status": "ok",
         "oil_model": oil_info,
+        "covid_dashboard": covid_pipeline_status(),
     }
 
 
@@ -353,6 +358,7 @@ def test_page():
     <div id="oil_error" class="alert"></div>
 
     <p class="footnote">โมเดลนี้เป็น Linear Regression ที่ฝึกและดีพลอยให้อัตโนมัติทุกวันผ่าน Airflow ผลลัพธ์เป็นการประมาณการเพื่อการทดสอบเท่านั้น</p>
+    <p class="footnote" style="margin-top:12px"><a href="/covid" style="color:#E8A33D;text-decoration:none">ดูแดชบอร์ดโควิด-19 ประเทศไทย →</a></p>
 
   </div>
 

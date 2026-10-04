@@ -1,0 +1,96 @@
+{
+  "id": 0,
+  "theme": null,
+  "sections": [
+    {
+      "id": 0,
+      "name": "ReportSection1",
+      "displayName": "ภาพรวมโควิด-19",
+      "filters": "[]",
+      "ordinal": 0,
+      "visualContainers": [
+        {
+          "x": 20,
+          "y": 20,
+          "z": 0,
+          "width": 240,
+          "height": 100,
+          "config": "{\"name\":\"slicerYear\",\"layouts\":[{\"id\":0,\"position\":{\"x\":20,\"y\":20,\"z\":0,\"width\":240,\"height\":100}}],\"singleVisual\":{\"visualType\":\"slicer\",\"projections\":{\"Values\":[{\"queryRef\":\"dim_date.ปี พ.ศ.\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"d\",\"Entity\":\"dim_date\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"d\"}},\"Property\":\"ปี พ.ศ.\"},\"Name\":\"dim_date.ปี พ.ศ.\"}]},\"drillFilterOtherVisuals\":true,\"objects\":{}}}",
+          "filters": "[]"
+        },
+        {
+          "x": 280,
+          "y": 20,
+          "z": 1,
+          "width": 320,
+          "height": 100,
+          "config": "{\"name\":\"cardTotal\",\"layouts\":[{\"id\":0,\"position\":{\"x\":280,\"y\":20,\"z\":1,\"width\":320,\"height\":100}}],\"singleVisual\":{\"visualType\":\"card\",\"projections\":{\"Values\":[{\"queryRef\":\"fact_covid_cases.ผู้ป่วยสะสม\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"f\",\"Entity\":\"fact_covid_cases\",\"Type\":0}],\"Select\":[{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"f\"}},\"Property\":\"ผู้ป่วยสะสม\"},\"Name\":\"fact_covid_cases.ผู้ป่วยสะสม\"}]},\"drillFilterOtherVisuals\":true,\"objects\":{}}}",
+          "filters": "[]"
+        },
+        {
+          "x": 620,
+          "y": 20,
+          "z": 1,
+          "width": 300,
+          "height": 100,
+          "config": "{\"name\":\"cardProvince\",\"layouts\":[{\"id\":0,\"position\":{\"x\":620,\"y\":20,\"z\":1,\"width\":300,\"height\":100}}],\"singleVisual\":{\"visualType\":\"card\",\"projections\":{\"Values\":[{\"queryRef\":\"fact_covid_cases.จำนวนจังหวัด\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"f\",\"Entity\":\"fact_covid_cases\",\"Type\":0}],\"Select\":[{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"f\"}},\"Property\":\"จำนวนจังหวัด\"},\"Name\":\"fact_covid_cases.จำนวนจังหวัด\"}]},\"drillFilterOtherVisuals\":true,\"objects\":{}}}",
+          "filters": "[]"
+        },
+        {
+          "x": 940,
+          "y": 20,
+          "z": 1,
+          "width": 320,
+          "height": 100,
+          "config": "{\"name\":\"cardPeak\",\"layouts\":[{\"id\":0,\"position\":{\"x\":940,\"y\":20,\"z\":1,\"width\":320,\"height\":100}}],\"singleVisual\":{\"visualType\":\"card\",\"projections\":{\"Values\":[{\"queryRef\":\"fact_covid_cases.วันที่พบสูงสุด\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"f\",\"Entity\":\"fact_covid_cases\",\"Type\":0}],\"Select\":[{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"f\"}},\"Property\":\"วันที่พบสูงสุด\"},\"Name\":\"fact_covid_cases.วันที่พบสูงสุด\"}]},\"drillFilterOtherVisuals\":true,\"objects\":{}}}",
+          "filters": "[]"
+        },
+        {
+          "x": 20,
+          "y": 140,
+          "z": 2,
+          "width": 1240,
+          "height": 260,
+          "config": "{\"name\":\"lineDaily\",\"layouts\":[{\"id\":0,\"position\":{\"x\":20,\"y\":140,\"z\":2,\"width\":1240,\"height\":260}}],\"singleVisual\":{\"visualType\":\"lineChart\",\"projections\":{\"Category\":[{\"queryRef\":\"dim_date.วันที่\"}],\"Y\":[{\"queryRef\":\"fact_covid_cases.ผู้ป่วยสะสม\"},{\"queryRef\":\"fact_covid_cases.เฉลี่ย 7 วัน\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"d\",\"Entity\":\"dim_date\",\"Type\":0},{\"Name\":\"f\",\"Entity\":\"fact_covid_cases\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"d\"}},\"Property\":\"วันที่\"},\"Name\":\"dim_date.วันที่\"},{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"f\"}},\"Property\":\"ผู้ป่วยสะสม\"},\"Name\":\"fact_covid_cases.ผู้ป่วยสะสม\"},{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"f\"}},\"Property\":\"เฉลี่ย 7 วัน\"},\"Name\":\"fact_covid_cases.เฉลี่ย 7 วัน\"}]},\"drillFilterOtherVisuals\":true,\"objects\":{}}}",
+          "filters": "[]"
+        },
+        {
+          "x": 20,
+          "y": 420,
+          "z": 3,
+          "width": 520,
+          "height": 280,
+          "config": "{\"name\":\"barProvince\",\"layouts\":[{\"id\":0,\"position\":{\"x\":20,\"y\":420,\"z\":3,\"width\":520,\"height\":280}}],\"singleVisual\":{\"visualType\":\"barChart\",\"projections\":{\"Category\":[{\"queryRef\":\"dim_province.จังหวัด\"}],\"Y\":[{\"queryRef\":\"fact_covid_cases.ผู้ป่วยสะสม\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"p\",\"Entity\":\"dim_province\",\"Type\":0},{\"Name\":\"f\",\"Entity\":\"fact_covid_cases\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"p\"}},\"Property\":\"จังหวัด\"},\"Name\":\"dim_province.จังหวัด\"},{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"f\"}},\"Property\":\"ผู้ป่วยสะสม\"},\"Name\":\"fact_covid_cases.ผู้ป่วยสะสม\"}],\"OrderBy\":[{\"Direction\":2,\"Expression\":{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"f\"}},\"Property\":\"ผู้ป่วยสะสม\"}}}]},\"drillFilterOtherVisuals\":true,\"objects\":{}}}",
+          "filters": "[]"
+        },
+        {
+          "x": 560,
+          "y": 420,
+          "z": 4,
+          "width": 380,
+          "height": 280,
+          "config": "{\"name\":\"columnAge\",\"layouts\":[{\"id\":0,\"position\":{\"x\":560,\"y\":420,\"z\":4,\"width\":380,\"height\":280}}],\"singleVisual\":{\"visualType\":\"columnChart\",\"projections\":{\"Category\":[{\"queryRef\":\"dim_age_group.ช่วงอายุ\"}],\"Y\":[{\"queryRef\":\"fact_covid_cases.ผู้ป่วยสะสม\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"a\",\"Entity\":\"dim_age_group\",\"Type\":0},{\"Name\":\"f\",\"Entity\":\"fact_covid_cases\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"a\"}},\"Property\":\"ช่วงอายุ\"},\"Name\":\"dim_age_group.ช่วงอายุ\"},{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"f\"}},\"Property\":\"ผู้ป่วยสะสม\"},\"Name\":\"fact_covid_cases.ผู้ป่วยสะสม\"}]},\"drillFilterOtherVisuals\":true,\"objects\":{}}}",
+          "filters": "[]"
+        },
+        {
+          "x": 960,
+          "y": 420,
+          "z": 5,
+          "width": 300,
+          "height": 280,
+          "config": "{\"name\":\"donutSex\",\"layouts\":[{\"id\":0,\"position\":{\"x\":960,\"y\":420,\"z\":5,\"width\":300,\"height\":280}}],\"singleVisual\":{\"visualType\":\"donutChart\",\"projections\":{\"Category\":[{\"queryRef\":\"fact_covid_cases.เพศ\"}],\"Y\":[{\"queryRef\":\"fact_covid_cases.ผู้ป่วยสะสม\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"f\",\"Entity\":\"fact_covid_cases\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"f\"}},\"Property\":\"เพศ\"},\"Name\":\"fact_covid_cases.เพศ\"},{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"f\"}},\"Property\":\"ผู้ป่วยสะสม\"},\"Name\":\"fact_covid_cases.ผู้ป่วยสะสม\"}]},\"drillFilterOtherVisuals\":true,\"objects\":{}}}",
+          "filters": "[]"
+        }
+      ],
+      "config": "{}",
+      "displayOption": 1,
+      "width": 1280,
+      "height": 720
+    }
+  ],
+  "config": "{\"version\":\"5.55\",\"themeCollection\":{},\"activeSectionIndex\":0,\"defaultDrillFilterOtherVisuals\":true,\"settings\":{\"useStylableVisualContainerHeader\":true}}",
+  "layoutOptimization": 0,
+  "publicCustomVisuals": [],
+  "resourcePackages": [],
+  "filters": "[]"
+}
