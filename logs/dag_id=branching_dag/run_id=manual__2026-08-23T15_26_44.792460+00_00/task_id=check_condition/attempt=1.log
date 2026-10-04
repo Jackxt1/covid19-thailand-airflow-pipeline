@@ -1,0 +1,26 @@
+[2026-08-23T15:26:46.659+0000] {local_task_job_runner.py:123} INFO - ::group::Pre task execution logs
+[2026-08-23T15:26:46.696+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: branching_dag.check_condition manual__2026-08-23T15:26:44.792460+00:00 [queued]>
+[2026-08-23T15:26:46.706+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: branching_dag.check_condition manual__2026-08-23T15:26:44.792460+00:00 [queued]>
+[2026-08-23T15:26:46.707+0000] {taskinstance.py:2866} INFO - Starting attempt 1 of 2
+[2026-08-23T15:26:46.721+0000] {taskinstance.py:2889} INFO - Executing <Task(BranchPythonOperator): check_condition> on 2026-08-23 15:26:44.792460+00:00
+[2026-08-23T15:26:46.739+0000] {warnings.py:112} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:70: DeprecationWarning: This process (pid=371) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  pid = os.fork()
+
+[2026-08-23T15:26:46.743+0000] {standard_task_runner.py:72} INFO - Started process 372 to run task
+[2026-08-23T15:26:46.743+0000] {standard_task_runner.py:104} INFO - Running: ['***', 'tasks', 'run', 'branching_dag', 'check_condition', 'manual__2026-08-23T15:26:44.792460+00:00', '--job-id', '8', '--raw', '--subdir', 'DAGS_FOLDER/03_branching_dag.py', '--cfg-path', '/tmp/tmpdb6sjwdv']
+[2026-08-23T15:26:46.745+0000] {standard_task_runner.py:105} INFO - Job 8: Subtask check_condition
+[2026-08-23T15:26:46.806+0000] {task_command.py:467} INFO - Running <TaskInstance: branching_dag.check_condition manual__2026-08-23T15:26:44.792460+00:00 [running]> on host 417225d49ca8
+[2026-08-23T15:26:46.875+0000] {taskinstance.py:3132} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='workshop' AIRFLOW_CTX_DAG_ID='branching_dag' AIRFLOW_CTX_TASK_ID='check_condition' AIRFLOW_CTX_EXECUTION_DATE='2026-08-23T15:26:44.792460+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-08-23T15:26:44.792460+00:00'
+[2026-08-23T15:26:46.876+0000] {taskinstance.py:731} INFO - ::endgroup::
+[2026-08-23T15:26:46.898+0000] {baseoperator.py:421} WARNING - BranchPythonOperator.execute cannot be called outside TaskInstance!
+[2026-08-23T15:26:46.899+0000] {logging_mixin.py:190} INFO - สุ่มตัวเลขได้: 21
+[2026-08-23T15:26:46.910+0000] {logging_mixin.py:190} INFO - 21 < 50 -> เลือกเส้นทาง low_branch_task
+[2026-08-23T15:26:46.910+0000] {python.py:240} INFO - Done. Returned value was: low_branch_task
+[2026-08-23T15:26:46.910+0000] {branch.py:38} INFO - Branch into low_branch_task
+[2026-08-23T15:26:46.911+0000] {skipmixin.py:230} INFO - Following branch ('low_branch_task',)
+[2026-08-23T15:26:46.923+0000] {skipmixin.py:278} INFO - Skipping tasks [('high_branch_task', -1)]
+[2026-08-23T15:26:46.949+0000] {taskinstance.py:340} INFO - ::group::Post task execution logs
+[2026-08-23T15:26:46.949+0000] {taskinstance.py:352} INFO - Marking task as SUCCESS. dag_id=branching_dag, task_id=check_condition, run_id=manual__2026-08-23T15:26:44.792460+00:00, execution_date=20260823T152644, start_date=20260823T152646, end_date=20260823T152646
+[2026-08-23T15:26:46.967+0000] {local_task_job_runner.py:266} INFO - Task exited with return code 0
+[2026-08-23T15:26:46.990+0000] {taskinstance.py:3895} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2026-08-23T15:26:46.991+0000] {local_task_job_runner.py:245} INFO - ::endgroup::

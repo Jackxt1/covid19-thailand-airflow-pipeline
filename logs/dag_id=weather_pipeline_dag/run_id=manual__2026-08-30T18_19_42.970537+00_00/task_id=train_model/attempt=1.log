@@ -1,0 +1,22 @@
+[2026-08-30T18:19:55.404+0000] {local_task_job_runner.py:123} INFO - ::group::Pre task execution logs
+[2026-08-30T18:19:55.416+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: weather_pipeline_dag.train_model manual__2026-08-30T18:19:42.970537+00:00 [queued]>
+[2026-08-30T18:19:55.419+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: weather_pipeline_dag.train_model manual__2026-08-30T18:19:42.970537+00:00 [queued]>
+[2026-08-30T18:19:55.420+0000] {taskinstance.py:2866} INFO - Starting attempt 1 of 2
+[2026-08-30T18:19:55.425+0000] {taskinstance.py:2889} INFO - Executing <Task(PythonOperator): train_model> on 2026-08-30 18:19:42.970537+00:00
+[2026-08-30T18:19:55.429+0000] {warnings.py:112} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:70: DeprecationWarning: This process (pid=243) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  pid = os.fork()
+
+[2026-08-30T18:19:55.430+0000] {standard_task_runner.py:72} INFO - Started process 244 to run task
+[2026-08-30T18:19:55.431+0000] {standard_task_runner.py:104} INFO - Running: ['***', 'tasks', 'run', 'weather_pipeline_dag', 'train_model', 'manual__2026-08-30T18:19:42.970537+00:00', '--job-id', '112', '--raw', '--subdir', 'DAGS_FOLDER/ml_02_weather_pipeline.py', '--cfg-path', '/tmp/tmpe97iw64n']
+[2026-08-30T18:19:55.433+0000] {standard_task_runner.py:105} INFO - Job 112: Subtask train_model
+[2026-08-30T18:19:55.633+0000] {task_command.py:467} INFO - Running <TaskInstance: weather_pipeline_dag.train_model manual__2026-08-30T18:19:42.970537+00:00 [running]> on host 887fc27ebbad
+[2026-08-30T18:19:55.678+0000] {taskinstance.py:3132} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='workshop2' AIRFLOW_CTX_DAG_ID='weather_pipeline_dag' AIRFLOW_CTX_TASK_ID='train_model' AIRFLOW_CTX_EXECUTION_DATE='2026-08-30T18:19:42.970537+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-08-30T18:19:42.970537+00:00'
+[2026-08-30T18:19:55.679+0000] {taskinstance.py:731} INFO - ::endgroup::
+[2026-08-30T18:19:57.140+0000] {logging_mixin.py:190} INFO - เทรนโมเดลเสร็จ (train 10 แถว, กันไว้วัดผล 3 แถว)
+[2026-08-30T18:19:57.141+0000] {logging_mixin.py:190} INFO - บันทึกไว้ที่: /opt/***/models/weather_models/candidate_manual__2026-08-30T18-19-42.970537-00-00.pkl
+[2026-08-30T18:19:57.142+0000] {python.py:240} INFO - Done. Returned value was: None
+[2026-08-30T18:19:57.153+0000] {taskinstance.py:340} INFO - ::group::Post task execution logs
+[2026-08-30T18:19:57.153+0000] {taskinstance.py:352} INFO - Marking task as SUCCESS. dag_id=weather_pipeline_dag, task_id=train_model, run_id=manual__2026-08-30T18:19:42.970537+00:00, execution_date=20260830T181942, start_date=20260830T181955, end_date=20260830T181957
+[2026-08-30T18:19:57.195+0000] {local_task_job_runner.py:266} INFO - Task exited with return code 0
+[2026-08-30T18:19:57.604+0000] {taskinstance.py:3895} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2026-08-30T18:19:57.605+0000] {local_task_job_runner.py:245} INFO - ::endgroup::

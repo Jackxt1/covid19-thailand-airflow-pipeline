@@ -1,0 +1,25 @@
+[2026-08-23T16:23:27.682+0000] {local_task_job_runner.py:123} INFO - ::group::Pre task execution logs
+[2026-08-23T16:23:27.699+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: etl_weather_postgres_dag.transform_weather manual__2026-08-23T16:23:18.459291+00:00 [queued]>
+[2026-08-23T16:23:27.716+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: etl_weather_postgres_dag.transform_weather manual__2026-08-23T16:23:18.459291+00:00 [queued]>
+[2026-08-23T16:23:27.717+0000] {taskinstance.py:2866} INFO - Starting attempt 1 of 2
+[2026-08-23T16:23:27.742+0000] {taskinstance.py:2889} INFO - Executing <Task(PythonOperator): transform_weather> on 2026-08-23 16:23:18.459291+00:00
+[2026-08-23T16:23:27.761+0000] {warnings.py:112} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:70: DeprecationWarning: This process (pid=1180) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  pid = os.fork()
+
+[2026-08-23T16:23:27.764+0000] {standard_task_runner.py:72} INFO - Started process 1181 to run task
+[2026-08-23T16:23:27.764+0000] {standard_task_runner.py:104} INFO - Running: ['***', 'tasks', 'run', 'etl_weather_postgres_dag', 'transform_weather', 'manual__2026-08-23T16:23:18.459291+00:00', '--job-id', '32', '--raw', '--subdir', 'DAGS_FOLDER/05_etl_weather_postgres.py', '--cfg-path', '/tmp/tmpk8t_34t9']
+[2026-08-23T16:23:27.765+0000] {standard_task_runner.py:105} INFO - Job 32: Subtask transform_weather
+[2026-08-23T16:23:27.908+0000] {task_command.py:467} INFO - Running <TaskInstance: etl_weather_postgres_dag.transform_weather manual__2026-08-23T16:23:18.459291+00:00 [running]> on host 417225d49ca8
+[2026-08-23T16:23:28.140+0000] {taskinstance.py:3132} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='workshop' AIRFLOW_CTX_DAG_ID='etl_weather_postgres_dag' AIRFLOW_CTX_TASK_ID='transform_weather' AIRFLOW_CTX_EXECUTION_DATE='2026-08-23T16:23:18.459291+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-08-23T16:23:18.459291+00:00'
+[2026-08-23T16:23:28.143+0000] {taskinstance.py:731} INFO - ::endgroup::
+[2026-08-23T16:23:28.235+0000] {logging_mixin.py:190} INFO - แปลงข้อมูล กรุงเทพฯ: 26.0 °C -> อากาศดี
+[2026-08-23T16:23:28.278+0000] {logging_mixin.py:190} INFO - แปลงข้อมูล เชียงใหม่: 25.3 °C -> อากาศดี
+[2026-08-23T16:23:28.295+0000] {logging_mixin.py:190} INFO - แปลงข้อมูล ขอนแก่น: 27.0 °C -> อากาศดี
+[2026-08-23T16:23:28.320+0000] {logging_mixin.py:190} INFO - แปลงข้อมูล ภูเก็ต: 28.5 °C -> อากาศดี
+[2026-08-23T16:23:28.360+0000] {logging_mixin.py:190} INFO - แปลงข้อมูลครบ 4 จังหวัด
+[2026-08-23T16:23:28.360+0000] {python.py:240} INFO - Done. Returned value was: None
+[2026-08-23T16:23:28.416+0000] {taskinstance.py:340} INFO - ::group::Post task execution logs
+[2026-08-23T16:23:28.420+0000] {taskinstance.py:352} INFO - Marking task as SUCCESS. dag_id=etl_weather_postgres_dag, task_id=transform_weather, run_id=manual__2026-08-23T16:23:18.459291+00:00, execution_date=20260823T162318, start_date=20260823T162327, end_date=20260823T162328
+[2026-08-23T16:23:28.511+0000] {local_task_job_runner.py:266} INFO - Task exited with return code 0
+[2026-08-23T16:23:28.606+0000] {taskinstance.py:3895} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2026-08-23T16:23:28.610+0000] {local_task_job_runner.py:245} INFO - ::endgroup::

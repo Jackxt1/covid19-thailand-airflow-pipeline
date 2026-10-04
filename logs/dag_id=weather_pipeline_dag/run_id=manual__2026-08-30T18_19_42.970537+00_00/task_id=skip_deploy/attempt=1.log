@@ -1,0 +1,22 @@
+[2026-08-30T18:20:05.482+0000] {local_task_job_runner.py:123} INFO - ::group::Pre task execution logs
+[2026-08-30T18:20:05.494+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: weather_pipeline_dag.skip_deploy manual__2026-08-30T18:19:42.970537+00:00 [queued]>
+[2026-08-30T18:20:05.500+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: weather_pipeline_dag.skip_deploy manual__2026-08-30T18:19:42.970537+00:00 [queued]>
+[2026-08-30T18:20:05.500+0000] {taskinstance.py:2866} INFO - Starting attempt 1 of 2
+[2026-08-30T18:20:05.507+0000] {taskinstance.py:2889} INFO - Executing <Task(PythonOperator): skip_deploy> on 2026-08-30 18:19:42.970537+00:00
+[2026-08-30T18:20:05.513+0000] {warnings.py:112} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:70: DeprecationWarning: This process (pid=278) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  pid = os.fork()
+
+[2026-08-30T18:20:05.514+0000] {standard_task_runner.py:72} INFO - Started process 279 to run task
+[2026-08-30T18:20:05.516+0000] {standard_task_runner.py:104} INFO - Running: ['***', 'tasks', 'run', 'weather_pipeline_dag', 'skip_deploy', 'manual__2026-08-30T18:19:42.970537+00:00', '--job-id', '116', '--raw', '--subdir', 'DAGS_FOLDER/ml_02_weather_pipeline.py', '--cfg-path', '/tmp/tmp9no9nxil']
+[2026-08-30T18:20:05.518+0000] {standard_task_runner.py:105} INFO - Job 116: Subtask skip_deploy
+[2026-08-30T18:20:05.751+0000] {task_command.py:467} INFO - Running <TaskInstance: weather_pipeline_dag.skip_deploy manual__2026-08-30T18:19:42.970537+00:00 [running]> on host 887fc27ebbad
+[2026-08-30T18:20:05.808+0000] {taskinstance.py:3132} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='workshop2' AIRFLOW_CTX_DAG_ID='weather_pipeline_dag' AIRFLOW_CTX_TASK_ID='skip_deploy' AIRFLOW_CTX_EXECUTION_DATE='2026-08-30T18:19:42.970537+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-08-30T18:19:42.970537+00:00'
+[2026-08-30T18:20:05.809+0000] {taskinstance.py:731} INFO - ::endgroup::
+[2026-08-30T18:20:05.832+0000] {logging_mixin.py:190} INFO - ข้าม deploy: RMSE ใหม่ 1.0734 vs champion เดิม 0.4173
+[2026-08-30T18:20:05.832+0000] {logging_mixin.py:190} INFO - โมเดลเดิม (current_model.pkl) ยังคงใช้งานต่อไป
+[2026-08-30T18:20:05.833+0000] {python.py:240} INFO - Done. Returned value was: skipped
+[2026-08-30T18:20:05.851+0000] {taskinstance.py:340} INFO - ::group::Post task execution logs
+[2026-08-30T18:20:05.851+0000] {taskinstance.py:352} INFO - Marking task as SUCCESS. dag_id=weather_pipeline_dag, task_id=skip_deploy, run_id=manual__2026-08-30T18:19:42.970537+00:00, execution_date=20260830T181942, start_date=20260830T182005, end_date=20260830T182005
+[2026-08-30T18:20:05.891+0000] {local_task_job_runner.py:266} INFO - Task exited with return code 0
+[2026-08-30T18:20:06.182+0000] {taskinstance.py:3895} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2026-08-30T18:20:06.185+0000] {local_task_job_runner.py:245} INFO - ::endgroup::

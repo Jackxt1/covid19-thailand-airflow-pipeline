@@ -1,0 +1,21 @@
+[2026-08-30T13:44:44.189+0000] {local_task_job_runner.py:123} INFO - ::group::Pre task execution logs
+[2026-08-30T13:44:44.205+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: iris_pipeline_dag.extract_data manual__2026-08-30T13:44:42.851048+00:00 [queued]>
+[2026-08-30T13:44:44.210+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: iris_pipeline_dag.extract_data manual__2026-08-30T13:44:42.851048+00:00 [queued]>
+[2026-08-30T13:44:44.210+0000] {taskinstance.py:2866} INFO - Starting attempt 1 of 2
+[2026-08-30T13:44:44.217+0000] {taskinstance.py:2889} INFO - Executing <Task(PythonOperator): extract_data> on 2026-08-30 13:44:42.851048+00:00
+[2026-08-30T13:44:44.228+0000] {warnings.py:112} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:70: DeprecationWarning: This process (pid=471) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  pid = os.fork()
+
+[2026-08-30T13:44:44.231+0000] {standard_task_runner.py:72} INFO - Started process 472 to run task
+[2026-08-30T13:44:44.231+0000] {standard_task_runner.py:104} INFO - Running: ['***', 'tasks', 'run', 'iris_pipeline_dag', 'extract_data', 'manual__2026-08-30T13:44:42.851048+00:00', '--job-id', '56', '--raw', '--subdir', 'DAGS_FOLDER/ml_01_iris_pipeline.py', '--cfg-path', '/tmp/tmpl3urpr2i']
+[2026-08-30T13:44:44.232+0000] {standard_task_runner.py:105} INFO - Job 56: Subtask extract_data
+[2026-08-30T13:44:44.286+0000] {task_command.py:467} INFO - Running <TaskInstance: iris_pipeline_dag.extract_data manual__2026-08-30T13:44:42.851048+00:00 [running]> on host 1c59b6033015
+[2026-08-30T13:44:44.339+0000] {taskinstance.py:3132} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='workshop2' AIRFLOW_CTX_DAG_ID='iris_pipeline_dag' AIRFLOW_CTX_TASK_ID='extract_data' AIRFLOW_CTX_EXECUTION_DATE='2026-08-30T13:44:42.851048+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-08-30T13:44:42.851048+00:00'
+[2026-08-30T13:44:44.340+0000] {taskinstance.py:731} INFO - ::endgroup::
+[2026-08-30T13:44:47.404+0000] {logging_mixin.py:190} INFO - โหลดข้อมูล iris สำเร็จ: 150 แถว, 4 feature
+[2026-08-30T13:44:47.410+0000] {python.py:240} INFO - Done. Returned value was: None
+[2026-08-30T13:44:47.430+0000] {taskinstance.py:340} INFO - ::group::Post task execution logs
+[2026-08-30T13:44:47.430+0000] {taskinstance.py:352} INFO - Marking task as SUCCESS. dag_id=iris_pipeline_dag, task_id=extract_data, run_id=manual__2026-08-30T13:44:42.851048+00:00, execution_date=20260830T134442, start_date=20260830T134444, end_date=20260830T134447
+[2026-08-30T13:44:47.554+0000] {local_task_job_runner.py:266} INFO - Task exited with return code 0
+[2026-08-30T13:44:47.623+0000] {taskinstance.py:3895} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2026-08-30T13:44:47.625+0000] {local_task_job_runner.py:245} INFO - ::endgroup::

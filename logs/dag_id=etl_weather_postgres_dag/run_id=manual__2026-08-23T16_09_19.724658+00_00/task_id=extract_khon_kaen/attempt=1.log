@@ -1,0 +1,20 @@
+[2026-08-23T16:09:24.552+0000] {local_task_job_runner.py:123} INFO - ::group::Pre task execution logs
+[2026-08-23T16:09:24.599+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: etl_weather_postgres_dag.extract_khon_kaen manual__2026-08-23T16:09:19.724658+00:00 [queued]>
+[2026-08-23T16:09:24.620+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: etl_weather_postgres_dag.extract_khon_kaen manual__2026-08-23T16:09:19.724658+00:00 [queued]>
+[2026-08-23T16:09:24.625+0000] {taskinstance.py:2866} INFO - Starting attempt 1 of 2
+[2026-08-23T16:09:24.673+0000] {taskinstance.py:2889} INFO - Executing <Task(PythonOperator): extract_khon_kaen> on 2026-08-23 16:09:19.724658+00:00
+[2026-08-23T16:09:24.691+0000] {warnings.py:112} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:70: DeprecationWarning: This process (pid=962) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  pid = os.fork()
+
+[2026-08-23T16:09:24.703+0000] {standard_task_runner.py:72} INFO - Started process 967 to run task
+[2026-08-23T16:09:24.704+0000] {standard_task_runner.py:104} INFO - Running: ['***', 'tasks', 'run', 'etl_weather_postgres_dag', 'extract_khon_kaen', 'manual__2026-08-23T16:09:19.724658+00:00', '--job-id', '20', '--raw', '--subdir', 'DAGS_FOLDER/05_etl_weather_postgres.py', '--cfg-path', '/tmp/tmp93s9kuhz']
+[2026-08-23T16:09:24.709+0000] {standard_task_runner.py:105} INFO - Job 20: Subtask extract_khon_kaen
+[2026-08-23T16:09:24.867+0000] {task_command.py:467} INFO - Running <TaskInstance: etl_weather_postgres_dag.extract_khon_kaen manual__2026-08-23T16:09:19.724658+00:00 [running]> on host 417225d49ca8
+[2026-08-23T16:09:25.077+0000] {taskinstance.py:3132} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='workshop' AIRFLOW_CTX_DAG_ID='etl_weather_postgres_dag' AIRFLOW_CTX_TASK_ID='extract_khon_kaen' AIRFLOW_CTX_EXECUTION_DATE='2026-08-23T16:09:19.724658+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-08-23T16:09:19.724658+00:00'
+[2026-08-23T16:09:25.079+0000] {taskinstance.py:731} INFO - ::endgroup::
+[2026-08-23T16:09:26.430+0000] {logging_mixin.py:190} INFO - ดึงข้อมูล ขอนแก่น สำเร็จ: {'province': 'ขอนแก่น', 'temperature': 27.1, 'windspeed': 20.1, 'weathercode': 3, 'recorded_at': '2026-08-23T16:00'}
+[2026-08-23T16:09:26.549+0000] {python.py:240} INFO - Done. Returned value was: None
+[2026-08-23T16:09:26.587+0000] {taskinstance.py:340} INFO - ::group::Post task execution logs
+[2026-08-23T16:09:26.590+0000] {taskinstance.py:352} INFO - Marking task as SUCCESS. dag_id=etl_weather_postgres_dag, task_id=extract_khon_kaen, run_id=manual__2026-08-23T16:09:19.724658+00:00, execution_date=20260823T160919, start_date=20260823T160924, end_date=20260823T160926
+[2026-08-23T16:09:26.682+0000] {local_task_job_runner.py:266} INFO - Task exited with return code 0
+[2026-08-23T16:09:26.859+0000] {local_task_job_runner.py:245} INFO - ::endgroup::

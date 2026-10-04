@@ -1,0 +1,465 @@
+[2026-09-08T06:44:05.439+0000] {local_task_job_runner.py:123} INFO - ::group::Pre task execution logs
+[2026-09-08T06:44:05.480+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: oil_price_pipeline_dag.bootstrap_historical_data manual__2026-09-08T06:43:58.628877+00:00 [queued]>
+[2026-09-08T06:44:05.497+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: oil_price_pipeline_dag.bootstrap_historical_data manual__2026-09-08T06:43:58.628877+00:00 [queued]>
+[2026-09-08T06:44:05.498+0000] {taskinstance.py:2866} INFO - Starting attempt 1 of 2
+[2026-09-08T06:44:05.531+0000] {taskinstance.py:2889} INFO - Executing <Task(PythonOperator): bootstrap_historical_data> on 2026-09-08 06:43:58.628877+00:00
+[2026-09-08T06:44:05.546+0000] {warnings.py:112} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:70: DeprecationWarning: This process (pid=187) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  pid = os.fork()
+
+[2026-09-08T06:44:05.551+0000] {standard_task_runner.py:72} INFO - Started process 189 to run task
+[2026-09-08T06:44:05.549+0000] {standard_task_runner.py:104} INFO - Running: ['***', 'tasks', 'run', 'oil_price_pipeline_dag', 'bootstrap_historical_data', 'manual__2026-09-08T06:43:58.628877+00:00', '--job-id', '6', '--raw', '--subdir', 'DAGS_FOLDER/ml_03_oil_pipeline.py', '--cfg-path', '/tmp/tmpheubp6ty']
+[2026-09-08T06:44:05.555+0000] {standard_task_runner.py:105} INFO - Job 6: Subtask bootstrap_historical_data
+[2026-09-08T06:44:05.845+0000] {task_command.py:467} INFO - Running <TaskInstance: oil_price_pipeline_dag.bootstrap_historical_data manual__2026-09-08T06:43:58.628877+00:00 [running]> on host cc163e6dd6e2
+[2026-09-08T06:44:06.275+0000] {taskinstance.py:3132} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='workshop2' AIRFLOW_CTX_DAG_ID='oil_price_pipeline_dag' AIRFLOW_CTX_TASK_ID='bootstrap_historical_data' AIRFLOW_CTX_EXECUTION_DATE='2026-09-08T06:43:58.628877+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-09-08T06:43:58.628877+00:00'
+[2026-09-08T06:44:06.277+0000] {taskinstance.py:731} INFO - ::endgroup::
+[2026-09-08T06:44:06.323+0000] {base.py:84} INFO - Retrieving connection 'postgres_target'
+[2026-09-08T06:44:06.337+0000] {sql.py:553} INFO - Running statement: SELECT COUNT(*) FROM oil_price_history WHERE symbol = %s;, parameters: ('GASOHOL95',)
+[2026-09-08T06:44:06.349+0000] {sql.py:562} INFO - Rows affected: 1
+[2026-09-08T06:44:06.351+0000] {logging_mixin.py:190} INFO - มีข้อมูล Gasohol 95 อยู่แล้ว 0 วัน (ต้องการอย่างน้อย 30 วัน)
+[2026-09-08T06:44:08.329+0000] {logging_mixin.py:190} INFO - Money Buffalo HTTP=200, HTML=139,120 bytes
+[2026-09-08T06:44:09.561+0000] {logging_mixin.py:190} INFO - Money Buffalo พบ HTML tables: 4
+[2026-09-08T06:44:09.563+0000] {logging_mixin.py:190} INFO - Money Buffalo table 0: shape=(9, 10), columns=['อัปเดตล่าสุด 08 ก.ย. 2026', 'Unnamed: 1', 'Unnamed: 2', 'Unnamed: 3', 'Unnamed: 4', 'Unnamed: 5', 'Unnamed: 6', 'Unnamed: 7', 'Unnamed: 8', 'Unnamed: 9']
+[2026-09-08T06:44:09.619+0000] {logging_mixin.py:190} INFO - Money Buffalo table 1: shape=(9, 4), columns=['Unnamed: 0', 'วันนี้', 'ส่วนต่าง', 'พรุ่งนี้']
+[2026-09-08T06:44:09.624+0000] {logging_mixin.py:190} INFO - Money Buffalo table 2: shape=(7, 9), columns=['วันที่', 'Unnamed: 1', 'Unnamed: 2', 'Unnamed: 3', 'Unnamed: 4', 'Unnamed: 5', 'Unnamed: 6', 'Unnamed: 7', 'Unnamed: 8']
+[2026-09-08T06:44:09.629+0000] {logging_mixin.py:190} INFO - Money Buffalo table 3: shape=(6, 3), columns=['Cookie', 'Duration', 'Description']
+[2026-09-08T06:44:09.731+0000] {logging_mixin.py:190} INFO - Money Buffalo ได้ 7 วัน
+[2026-09-08T06:44:09.742+0000] {logging_mixin.py:190} INFO - Rakawannee: เริ่มดึงย้อนหลัง 60 วัน จาก 2026-07-11 ถึง 2026-09-08
+[2026-09-08T06:44:10.904+0000] {logging_mixin.py:190} INFO - Rakawannee OK: 2026-09-08 -> 38.29
+[2026-09-08T06:44:11.796+0000] {logging_mixin.py:190} INFO - Rakawannee OK: 2026-09-07 -> 38.29
+[2026-09-08T06:44:12.693+0000] {logging_mixin.py:190} INFO - Rakawannee OK: 2026-09-06 -> 38.29
+[2026-09-08T06:44:13.546+0000] {logging_mixin.py:190} INFO - Rakawannee OK: 2026-09-05 -> 38.29
+[2026-09-08T06:44:14.078+0000] {logging_mixin.py:190} INFO - Rakawannee OK: 2026-09-04 -> 38.29
+[2026-09-08T06:44:14.931+0000] {logging_mixin.py:190} INFO - Rakawannee OK: 2026-09-03 -> 38.29
+[2026-09-08T06:44:15.439+0000] {logging_mixin.py:190} INFO - Rakawannee OK: 2026-09-02 -> 37.69
+[2026-09-08T06:44:16.324+0000] {logging_mixin.py:190} INFO - Rakawannee OK: 2026-09-01 -> 37.69
+[2026-09-08T06:44:17.203+0000] {logging_mixin.py:190} INFO - Rakawannee OK: 2026-08-31 -> 37.69
+[2026-09-08T06:44:18.292+0000] {logging_mixin.py:190} INFO - Rakawannee OK: 2026-08-30 -> 37.69
+[2026-09-08T06:44:19.194+0000] {logging_mixin.py:190} INFO - Rakawannee OK: 2026-08-29 -> 37.69
+[2026-09-08T06:44:19.818+0000] {logging_mixin.py:190} INFO - Rakawannee OK: 2026-08-28 -> 37.69
+[2026-09-08T06:44:20.408+0000] {logging_mixin.py:190} INFO - Rakawannee OK: 2026-08-27 -> 37.69
+[2026-09-08T06:44:21.446+0000] {logging_mixin.py:190} INFO - Rakawannee OK: 2026-08-26 -> 37.69
+[2026-09-08T06:44:22.091+0000] {logging_mixin.py:190} INFO - Rakawannee OK: 2026-08-25 -> 37.69
+[2026-09-08T06:44:22.988+0000] {logging_mixin.py:190} INFO - Rakawannee OK: 2026-08-24 -> 37.69
+[2026-09-08T06:44:23.494+0000] {logging_mixin.py:190} INFO - Rakawannee OK: 2026-08-23 -> 37.69
+[2026-09-08T06:44:24.021+0000] {logging_mixin.py:190} INFO - Rakawannee OK: 2026-08-22 -> 37.69
+[2026-09-08T06:44:24.904+0000] {logging_mixin.py:190} INFO - Rakawannee OK: 2026-08-21 -> 37.69
+[2026-09-08T06:44:25.416+0000] {logging_mixin.py:190} INFO - Rakawannee OK: 2026-08-20 -> 37.69
+[2026-09-08T06:44:26.288+0000] {logging_mixin.py:190} INFO - Rakawannee OK: 2026-08-19 -> 37.69
+[2026-09-08T06:44:26.818+0000] {logging_mixin.py:190} INFO - Rakawannee OK: 2026-08-18 -> 36.84
+[2026-09-08T06:44:27.371+0000] {logging_mixin.py:190} INFO - Rakawannee OK: 2026-08-17 -> 36.84
+[2026-09-08T06:44:28.010+0000] {logging_mixin.py:190} INFO - Rakawannee OK: 2026-08-16 -> 36.84
+[2026-09-08T06:44:28.508+0000] {logging_mixin.py:190} INFO - Rakawannee OK: 2026-08-15 -> 36.84
+[2026-09-08T06:44:29.033+0000] {logging_mixin.py:190} INFO - Rakawannee OK: 2026-08-14 -> 36.84
+[2026-09-08T06:44:29.561+0000] {logging_mixin.py:190} INFO - Rakawannee OK: 2026-08-13 -> 36.84
+[2026-09-08T06:44:30.063+0000] {logging_mixin.py:190} INFO - Rakawannee OK: 2026-08-12 -> 35.99
+[2026-09-08T06:44:30.621+0000] {logging_mixin.py:190} INFO - Rakawannee OK: 2026-08-11 -> 35.99
+[2026-09-08T06:44:31.139+0000] {logging_mixin.py:190} INFO - Rakawannee OK: 2026-08-10 -> 35.99
+[2026-09-08T06:44:31.654+0000] {logging_mixin.py:190} INFO - Rakawannee OK: 2026-08-09 -> 35.99
+[2026-09-08T06:44:32.402+0000] {logging_mixin.py:190} INFO - Rakawannee OK: 2026-08-08 -> 35.99
+[2026-09-08T06:44:32.927+0000] {logging_mixin.py:190} INFO - Rakawannee OK: 2026-08-07 -> 35.99
+[2026-09-08T06:44:33.463+0000] {logging_mixin.py:190} INFO - Rakawannee OK: 2026-08-06 -> 36.69
+[2026-09-08T06:44:34.505+0000] {logging_mixin.py:190} INFO - Rakawannee OK: 2026-08-05 -> 36.69
+[2026-09-08T06:44:35.037+0000] {logging_mixin.py:190} INFO - Rakawannee OK: 2026-08-04 -> 36.69
+[2026-09-08T06:44:35.469+0000] {logging_mixin.py:190} INFO - Rakawannee OK: 2026-08-03 -> 36.69
+[2026-09-08T06:44:36.083+0000] {logging_mixin.py:190} INFO - Rakawannee OK: 2026-08-02 -> 36.69
+[2026-09-08T06:44:36.705+0000] {logging_mixin.py:190} INFO - Rakawannee OK: 2026-08-01 -> 36.69
+[2026-09-08T06:44:37.214+0000] {logging_mixin.py:190} INFO - Rakawannee OK: 2026-07-31 -> 36.69
+[2026-09-08T06:44:37.745+0000] {logging_mixin.py:190} INFO - Rakawannee OK: 2026-07-30 -> 36.69
+[2026-09-08T06:44:38.335+0000] {logging_mixin.py:190} INFO - Rakawannee OK: 2026-07-29 -> 36.69
+[2026-09-08T06:44:38.966+0000] {logging_mixin.py:190} INFO - Rakawannee OK: 2026-07-28 -> 36.69
+[2026-09-08T06:44:39.868+0000] {logging_mixin.py:190} INFO - Rakawannee OK: 2026-07-27 -> 36.69
+[2026-09-08T06:44:40.582+0000] {logging_mixin.py:190} INFO - Rakawannee OK: 2026-07-26 -> 36.69
+[2026-09-08T06:44:41.126+0000] {logging_mixin.py:190} INFO - Rakawannee OK: 2026-07-25 -> 36.69
+[2026-09-08T06:44:42.258+0000] {logging_mixin.py:190} INFO - Rakawannee OK: 2026-07-24 -> 36.69
+[2026-09-08T06:44:42.764+0000] {logging_mixin.py:190} INFO - Rakawannee OK: 2026-07-23 -> 36.69
+[2026-09-08T06:44:43.362+0000] {logging_mixin.py:190} INFO - Rakawannee OK: 2026-07-22 -> 34.94
+[2026-09-08T06:44:44.175+0000] {logging_mixin.py:190} INFO - Rakawannee OK: 2026-07-21 -> 34.94
+[2026-09-08T06:44:45.104+0000] {logging_mixin.py:190} INFO - Rakawannee OK: 2026-07-20 -> 34.94
+[2026-09-08T06:44:45.609+0000] {logging_mixin.py:190} INFO - Rakawannee OK: 2026-07-19 -> 34.94
+[2026-09-08T06:44:46.036+0000] {logging_mixin.py:190} INFO - Rakawannee OK: 2026-07-18 -> 34.94
+[2026-09-08T06:44:46.536+0000] {logging_mixin.py:190} INFO - Rakawannee OK: 2026-07-17 -> 34.94
+[2026-09-08T06:44:47.046+0000] {logging_mixin.py:190} INFO - Rakawannee OK: 2026-07-16 -> 34.94
+[2026-09-08T06:44:47.565+0000] {logging_mixin.py:190} INFO - Rakawannee OK: 2026-07-15 -> 34.94
+[2026-09-08T06:44:48.073+0000] {logging_mixin.py:190} INFO - Rakawannee OK: 2026-07-14 -> 34.94
+[2026-09-08T06:44:48.666+0000] {logging_mixin.py:190} INFO - Rakawannee OK: 2026-07-13 -> 34.94
+[2026-09-08T06:44:49.200+0000] {logging_mixin.py:190} INFO - Rakawannee OK: 2026-07-12 -> 34.94
+[2026-09-08T06:44:49.696+0000] {logging_mixin.py:190} INFO - Rakawannee OK: 2026-07-11 -> 34.94
+[2026-09-08T06:44:49.707+0000] {logging_mixin.py:190} INFO - Rakawannee ได้ 60 วัน
+[2026-09-08T06:44:49.801+0000] {logging_mixin.py:190} INFO - ====================================
+[2026-09-08T06:44:49.803+0000] {logging_mixin.py:190} INFO - Gasohol 95 Historical Data
+[2026-09-08T06:44:49.804+0000] {logging_mixin.py:190} INFO - ====================================
+[2026-09-08T06:44:49.806+0000] {logging_mixin.py:190} INFO - Money Buffalo: 7 วัน
+[2026-09-08T06:44:49.807+0000] {logging_mixin.py:190} INFO - Rakawannee:   60 วัน
+[2026-09-08T06:44:49.809+0000] {logging_mixin.py:190} INFO - รวมทั้งหมด:   60 วัน
+[2026-09-08T06:44:49.811+0000] {logging_mixin.py:190} INFO - วันแรก:   2026-07-11
+[2026-09-08T06:44:49.813+0000] {logging_mixin.py:190} INFO - วันล่าสุด: 2026-09-08
+[2026-09-08T06:44:49.815+0000] {logging_mixin.py:190} INFO - ราคาล่าสุด: 38.29 บาท/ลิตร
+[2026-09-08T06:44:49.817+0000] {logging_mixin.py:190} INFO - ====================================
+[2026-09-08T06:44:49.832+0000] {sql.py:553} INFO - Running statement: 
+            INSERT INTO oil_price_history (date, symbol, price)
+            VALUES (%s, %s, %s)
+            ON CONFLICT (date, symbol) DO NOTHING;
+            , parameters: (datetime.date(2026, 7, 11), 'GASOHOL95', 34.94)
+[2026-09-08T06:44:49.845+0000] {sql.py:562} INFO - Rows affected: 1
+[2026-09-08T06:44:49.862+0000] {sql.py:553} INFO - Running statement: 
+            INSERT INTO oil_price_history (date, symbol, price)
+            VALUES (%s, %s, %s)
+            ON CONFLICT (date, symbol) DO NOTHING;
+            , parameters: (datetime.date(2026, 7, 12), 'GASOHOL95', 34.94)
+[2026-09-08T06:44:49.866+0000] {sql.py:562} INFO - Rows affected: 1
+[2026-09-08T06:44:49.883+0000] {sql.py:553} INFO - Running statement: 
+            INSERT INTO oil_price_history (date, symbol, price)
+            VALUES (%s, %s, %s)
+            ON CONFLICT (date, symbol) DO NOTHING;
+            , parameters: (datetime.date(2026, 7, 13), 'GASOHOL95', 34.94)
+[2026-09-08T06:44:49.887+0000] {sql.py:562} INFO - Rows affected: 1
+[2026-09-08T06:44:49.908+0000] {sql.py:553} INFO - Running statement: 
+            INSERT INTO oil_price_history (date, symbol, price)
+            VALUES (%s, %s, %s)
+            ON CONFLICT (date, symbol) DO NOTHING;
+            , parameters: (datetime.date(2026, 7, 14), 'GASOHOL95', 34.94)
+[2026-09-08T06:44:49.912+0000] {sql.py:562} INFO - Rows affected: 1
+[2026-09-08T06:44:49.934+0000] {sql.py:553} INFO - Running statement: 
+            INSERT INTO oil_price_history (date, symbol, price)
+            VALUES (%s, %s, %s)
+            ON CONFLICT (date, symbol) DO NOTHING;
+            , parameters: (datetime.date(2026, 7, 15), 'GASOHOL95', 34.94)
+[2026-09-08T06:44:49.939+0000] {sql.py:562} INFO - Rows affected: 1
+[2026-09-08T06:44:49.965+0000] {sql.py:553} INFO - Running statement: 
+            INSERT INTO oil_price_history (date, symbol, price)
+            VALUES (%s, %s, %s)
+            ON CONFLICT (date, symbol) DO NOTHING;
+            , parameters: (datetime.date(2026, 7, 16), 'GASOHOL95', 34.94)
+[2026-09-08T06:44:49.969+0000] {sql.py:562} INFO - Rows affected: 1
+[2026-09-08T06:44:49.989+0000] {sql.py:553} INFO - Running statement: 
+            INSERT INTO oil_price_history (date, symbol, price)
+            VALUES (%s, %s, %s)
+            ON CONFLICT (date, symbol) DO NOTHING;
+            , parameters: (datetime.date(2026, 7, 17), 'GASOHOL95', 34.94)
+[2026-09-08T06:44:49.993+0000] {sql.py:562} INFO - Rows affected: 1
+[2026-09-08T06:44:50.011+0000] {sql.py:553} INFO - Running statement: 
+            INSERT INTO oil_price_history (date, symbol, price)
+            VALUES (%s, %s, %s)
+            ON CONFLICT (date, symbol) DO NOTHING;
+            , parameters: (datetime.date(2026, 7, 18), 'GASOHOL95', 34.94)
+[2026-09-08T06:44:50.015+0000] {sql.py:562} INFO - Rows affected: 1
+[2026-09-08T06:44:50.033+0000] {sql.py:553} INFO - Running statement: 
+            INSERT INTO oil_price_history (date, symbol, price)
+            VALUES (%s, %s, %s)
+            ON CONFLICT (date, symbol) DO NOTHING;
+            , parameters: (datetime.date(2026, 7, 19), 'GASOHOL95', 34.94)
+[2026-09-08T06:44:50.036+0000] {sql.py:562} INFO - Rows affected: 1
+[2026-09-08T06:44:50.054+0000] {sql.py:553} INFO - Running statement: 
+            INSERT INTO oil_price_history (date, symbol, price)
+            VALUES (%s, %s, %s)
+            ON CONFLICT (date, symbol) DO NOTHING;
+            , parameters: (datetime.date(2026, 7, 20), 'GASOHOL95', 34.94)
+[2026-09-08T06:44:50.057+0000] {sql.py:562} INFO - Rows affected: 1
+[2026-09-08T06:44:50.076+0000] {sql.py:553} INFO - Running statement: 
+            INSERT INTO oil_price_history (date, symbol, price)
+            VALUES (%s, %s, %s)
+            ON CONFLICT (date, symbol) DO NOTHING;
+            , parameters: (datetime.date(2026, 7, 21), 'GASOHOL95', 34.94)
+[2026-09-08T06:44:50.079+0000] {sql.py:562} INFO - Rows affected: 1
+[2026-09-08T06:44:50.096+0000] {sql.py:553} INFO - Running statement: 
+            INSERT INTO oil_price_history (date, symbol, price)
+            VALUES (%s, %s, %s)
+            ON CONFLICT (date, symbol) DO NOTHING;
+            , parameters: (datetime.date(2026, 7, 22), 'GASOHOL95', 34.94)
+[2026-09-08T06:44:50.100+0000] {sql.py:562} INFO - Rows affected: 1
+[2026-09-08T06:44:50.117+0000] {sql.py:553} INFO - Running statement: 
+            INSERT INTO oil_price_history (date, symbol, price)
+            VALUES (%s, %s, %s)
+            ON CONFLICT (date, symbol) DO NOTHING;
+            , parameters: (datetime.date(2026, 7, 23), 'GASOHOL95', 36.69)
+[2026-09-08T06:44:50.120+0000] {sql.py:562} INFO - Rows affected: 1
+[2026-09-08T06:44:50.137+0000] {sql.py:553} INFO - Running statement: 
+            INSERT INTO oil_price_history (date, symbol, price)
+            VALUES (%s, %s, %s)
+            ON CONFLICT (date, symbol) DO NOTHING;
+            , parameters: (datetime.date(2026, 7, 24), 'GASOHOL95', 36.69)
+[2026-09-08T06:44:50.140+0000] {sql.py:562} INFO - Rows affected: 1
+[2026-09-08T06:44:50.163+0000] {sql.py:553} INFO - Running statement: 
+            INSERT INTO oil_price_history (date, symbol, price)
+            VALUES (%s, %s, %s)
+            ON CONFLICT (date, symbol) DO NOTHING;
+            , parameters: (datetime.date(2026, 7, 25), 'GASOHOL95', 36.69)
+[2026-09-08T06:44:50.167+0000] {sql.py:562} INFO - Rows affected: 1
+[2026-09-08T06:44:50.185+0000] {sql.py:553} INFO - Running statement: 
+            INSERT INTO oil_price_history (date, symbol, price)
+            VALUES (%s, %s, %s)
+            ON CONFLICT (date, symbol) DO NOTHING;
+            , parameters: (datetime.date(2026, 7, 26), 'GASOHOL95', 36.69)
+[2026-09-08T06:44:50.189+0000] {sql.py:562} INFO - Rows affected: 1
+[2026-09-08T06:44:50.209+0000] {sql.py:553} INFO - Running statement: 
+            INSERT INTO oil_price_history (date, symbol, price)
+            VALUES (%s, %s, %s)
+            ON CONFLICT (date, symbol) DO NOTHING;
+            , parameters: (datetime.date(2026, 7, 27), 'GASOHOL95', 36.69)
+[2026-09-08T06:44:50.213+0000] {sql.py:562} INFO - Rows affected: 1
+[2026-09-08T06:44:50.231+0000] {sql.py:553} INFO - Running statement: 
+            INSERT INTO oil_price_history (date, symbol, price)
+            VALUES (%s, %s, %s)
+            ON CONFLICT (date, symbol) DO NOTHING;
+            , parameters: (datetime.date(2026, 7, 28), 'GASOHOL95', 36.69)
+[2026-09-08T06:44:50.235+0000] {sql.py:562} INFO - Rows affected: 1
+[2026-09-08T06:44:50.253+0000] {sql.py:553} INFO - Running statement: 
+            INSERT INTO oil_price_history (date, symbol, price)
+            VALUES (%s, %s, %s)
+            ON CONFLICT (date, symbol) DO NOTHING;
+            , parameters: (datetime.date(2026, 7, 29), 'GASOHOL95', 36.69)
+[2026-09-08T06:44:50.257+0000] {sql.py:562} INFO - Rows affected: 1
+[2026-09-08T06:44:50.278+0000] {sql.py:553} INFO - Running statement: 
+            INSERT INTO oil_price_history (date, symbol, price)
+            VALUES (%s, %s, %s)
+            ON CONFLICT (date, symbol) DO NOTHING;
+            , parameters: (datetime.date(2026, 7, 30), 'GASOHOL95', 36.69)
+[2026-09-08T06:44:50.282+0000] {sql.py:562} INFO - Rows affected: 1
+[2026-09-08T06:44:50.300+0000] {sql.py:553} INFO - Running statement: 
+            INSERT INTO oil_price_history (date, symbol, price)
+            VALUES (%s, %s, %s)
+            ON CONFLICT (date, symbol) DO NOTHING;
+            , parameters: (datetime.date(2026, 7, 31), 'GASOHOL95', 36.69)
+[2026-09-08T06:44:50.303+0000] {sql.py:562} INFO - Rows affected: 1
+[2026-09-08T06:44:50.321+0000] {sql.py:553} INFO - Running statement: 
+            INSERT INTO oil_price_history (date, symbol, price)
+            VALUES (%s, %s, %s)
+            ON CONFLICT (date, symbol) DO NOTHING;
+            , parameters: (datetime.date(2026, 8, 1), 'GASOHOL95', 36.69)
+[2026-09-08T06:44:50.324+0000] {sql.py:562} INFO - Rows affected: 1
+[2026-09-08T06:44:50.344+0000] {sql.py:553} INFO - Running statement: 
+            INSERT INTO oil_price_history (date, symbol, price)
+            VALUES (%s, %s, %s)
+            ON CONFLICT (date, symbol) DO NOTHING;
+            , parameters: (datetime.date(2026, 8, 2), 'GASOHOL95', 36.69)
+[2026-09-08T06:44:50.349+0000] {sql.py:562} INFO - Rows affected: 1
+[2026-09-08T06:44:50.372+0000] {sql.py:553} INFO - Running statement: 
+            INSERT INTO oil_price_history (date, symbol, price)
+            VALUES (%s, %s, %s)
+            ON CONFLICT (date, symbol) DO NOTHING;
+            , parameters: (datetime.date(2026, 8, 3), 'GASOHOL95', 36.69)
+[2026-09-08T06:44:50.377+0000] {sql.py:562} INFO - Rows affected: 1
+[2026-09-08T06:44:50.403+0000] {sql.py:553} INFO - Running statement: 
+            INSERT INTO oil_price_history (date, symbol, price)
+            VALUES (%s, %s, %s)
+            ON CONFLICT (date, symbol) DO NOTHING;
+            , parameters: (datetime.date(2026, 8, 4), 'GASOHOL95', 36.69)
+[2026-09-08T06:44:50.408+0000] {sql.py:562} INFO - Rows affected: 1
+[2026-09-08T06:44:50.430+0000] {sql.py:553} INFO - Running statement: 
+            INSERT INTO oil_price_history (date, symbol, price)
+            VALUES (%s, %s, %s)
+            ON CONFLICT (date, symbol) DO NOTHING;
+            , parameters: (datetime.date(2026, 8, 5), 'GASOHOL95', 36.69)
+[2026-09-08T06:44:50.434+0000] {sql.py:562} INFO - Rows affected: 1
+[2026-09-08T06:44:50.453+0000] {sql.py:553} INFO - Running statement: 
+            INSERT INTO oil_price_history (date, symbol, price)
+            VALUES (%s, %s, %s)
+            ON CONFLICT (date, symbol) DO NOTHING;
+            , parameters: (datetime.date(2026, 8, 6), 'GASOHOL95', 36.69)
+[2026-09-08T06:44:50.457+0000] {sql.py:562} INFO - Rows affected: 1
+[2026-09-08T06:44:50.474+0000] {sql.py:553} INFO - Running statement: 
+            INSERT INTO oil_price_history (date, symbol, price)
+            VALUES (%s, %s, %s)
+            ON CONFLICT (date, symbol) DO NOTHING;
+            , parameters: (datetime.date(2026, 8, 7), 'GASOHOL95', 35.99)
+[2026-09-08T06:44:50.477+0000] {sql.py:562} INFO - Rows affected: 1
+[2026-09-08T06:44:50.497+0000] {sql.py:553} INFO - Running statement: 
+            INSERT INTO oil_price_history (date, symbol, price)
+            VALUES (%s, %s, %s)
+            ON CONFLICT (date, symbol) DO NOTHING;
+            , parameters: (datetime.date(2026, 8, 8), 'GASOHOL95', 35.99)
+[2026-09-08T06:44:50.502+0000] {sql.py:562} INFO - Rows affected: 1
+[2026-09-08T06:44:50.520+0000] {sql.py:553} INFO - Running statement: 
+            INSERT INTO oil_price_history (date, symbol, price)
+            VALUES (%s, %s, %s)
+            ON CONFLICT (date, symbol) DO NOTHING;
+            , parameters: (datetime.date(2026, 8, 9), 'GASOHOL95', 35.99)
+[2026-09-08T06:44:50.524+0000] {sql.py:562} INFO - Rows affected: 1
+[2026-09-08T06:44:50.540+0000] {sql.py:553} INFO - Running statement: 
+            INSERT INTO oil_price_history (date, symbol, price)
+            VALUES (%s, %s, %s)
+            ON CONFLICT (date, symbol) DO NOTHING;
+            , parameters: (datetime.date(2026, 8, 10), 'GASOHOL95', 35.99)
+[2026-09-08T06:44:50.544+0000] {sql.py:562} INFO - Rows affected: 1
+[2026-09-08T06:44:50.560+0000] {sql.py:553} INFO - Running statement: 
+            INSERT INTO oil_price_history (date, symbol, price)
+            VALUES (%s, %s, %s)
+            ON CONFLICT (date, symbol) DO NOTHING;
+            , parameters: (datetime.date(2026, 8, 11), 'GASOHOL95', 35.99)
+[2026-09-08T06:44:50.564+0000] {sql.py:562} INFO - Rows affected: 1
+[2026-09-08T06:44:50.581+0000] {sql.py:553} INFO - Running statement: 
+            INSERT INTO oil_price_history (date, symbol, price)
+            VALUES (%s, %s, %s)
+            ON CONFLICT (date, symbol) DO NOTHING;
+            , parameters: (datetime.date(2026, 8, 12), 'GASOHOL95', 35.99)
+[2026-09-08T06:44:50.585+0000] {sql.py:562} INFO - Rows affected: 1
+[2026-09-08T06:44:50.602+0000] {sql.py:553} INFO - Running statement: 
+            INSERT INTO oil_price_history (date, symbol, price)
+            VALUES (%s, %s, %s)
+            ON CONFLICT (date, symbol) DO NOTHING;
+            , parameters: (datetime.date(2026, 8, 13), 'GASOHOL95', 36.84)
+[2026-09-08T06:44:50.606+0000] {sql.py:562} INFO - Rows affected: 1
+[2026-09-08T06:44:50.624+0000] {sql.py:553} INFO - Running statement: 
+            INSERT INTO oil_price_history (date, symbol, price)
+            VALUES (%s, %s, %s)
+            ON CONFLICT (date, symbol) DO NOTHING;
+            , parameters: (datetime.date(2026, 8, 14), 'GASOHOL95', 36.84)
+[2026-09-08T06:44:50.629+0000] {sql.py:562} INFO - Rows affected: 1
+[2026-09-08T06:44:50.646+0000] {sql.py:553} INFO - Running statement: 
+            INSERT INTO oil_price_history (date, symbol, price)
+            VALUES (%s, %s, %s)
+            ON CONFLICT (date, symbol) DO NOTHING;
+            , parameters: (datetime.date(2026, 8, 15), 'GASOHOL95', 36.84)
+[2026-09-08T06:44:50.653+0000] {sql.py:562} INFO - Rows affected: 1
+[2026-09-08T06:44:50.673+0000] {sql.py:553} INFO - Running statement: 
+            INSERT INTO oil_price_history (date, symbol, price)
+            VALUES (%s, %s, %s)
+            ON CONFLICT (date, symbol) DO NOTHING;
+            , parameters: (datetime.date(2026, 8, 16), 'GASOHOL95', 36.84)
+[2026-09-08T06:44:50.676+0000] {sql.py:562} INFO - Rows affected: 1
+[2026-09-08T06:44:50.694+0000] {sql.py:553} INFO - Running statement: 
+            INSERT INTO oil_price_history (date, symbol, price)
+            VALUES (%s, %s, %s)
+            ON CONFLICT (date, symbol) DO NOTHING;
+            , parameters: (datetime.date(2026, 8, 17), 'GASOHOL95', 36.84)
+[2026-09-08T06:44:50.698+0000] {sql.py:562} INFO - Rows affected: 1
+[2026-09-08T06:44:50.715+0000] {sql.py:553} INFO - Running statement: 
+            INSERT INTO oil_price_history (date, symbol, price)
+            VALUES (%s, %s, %s)
+            ON CONFLICT (date, symbol) DO NOTHING;
+            , parameters: (datetime.date(2026, 8, 18), 'GASOHOL95', 36.84)
+[2026-09-08T06:44:50.719+0000] {sql.py:562} INFO - Rows affected: 1
+[2026-09-08T06:44:50.736+0000] {sql.py:553} INFO - Running statement: 
+            INSERT INTO oil_price_history (date, symbol, price)
+            VALUES (%s, %s, %s)
+            ON CONFLICT (date, symbol) DO NOTHING;
+            , parameters: (datetime.date(2026, 8, 19), 'GASOHOL95', 37.69)
+[2026-09-08T06:44:50.739+0000] {sql.py:562} INFO - Rows affected: 1
+[2026-09-08T06:44:50.756+0000] {sql.py:553} INFO - Running statement: 
+            INSERT INTO oil_price_history (date, symbol, price)
+            VALUES (%s, %s, %s)
+            ON CONFLICT (date, symbol) DO NOTHING;
+            , parameters: (datetime.date(2026, 8, 20), 'GASOHOL95', 37.69)
+[2026-09-08T06:44:50.760+0000] {sql.py:562} INFO - Rows affected: 1
+[2026-09-08T06:44:50.777+0000] {sql.py:553} INFO - Running statement: 
+            INSERT INTO oil_price_history (date, symbol, price)
+            VALUES (%s, %s, %s)
+            ON CONFLICT (date, symbol) DO NOTHING;
+            , parameters: (datetime.date(2026, 8, 21), 'GASOHOL95', 37.69)
+[2026-09-08T06:44:50.780+0000] {sql.py:562} INFO - Rows affected: 1
+[2026-09-08T06:44:50.800+0000] {sql.py:553} INFO - Running statement: 
+            INSERT INTO oil_price_history (date, symbol, price)
+            VALUES (%s, %s, %s)
+            ON CONFLICT (date, symbol) DO NOTHING;
+            , parameters: (datetime.date(2026, 8, 22), 'GASOHOL95', 37.69)
+[2026-09-08T06:44:50.803+0000] {sql.py:562} INFO - Rows affected: 1
+[2026-09-08T06:44:50.819+0000] {sql.py:553} INFO - Running statement: 
+            INSERT INTO oil_price_history (date, symbol, price)
+            VALUES (%s, %s, %s)
+            ON CONFLICT (date, symbol) DO NOTHING;
+            , parameters: (datetime.date(2026, 8, 23), 'GASOHOL95', 37.69)
+[2026-09-08T06:44:50.823+0000] {sql.py:562} INFO - Rows affected: 1
+[2026-09-08T06:44:50.839+0000] {sql.py:553} INFO - Running statement: 
+            INSERT INTO oil_price_history (date, symbol, price)
+            VALUES (%s, %s, %s)
+            ON CONFLICT (date, symbol) DO NOTHING;
+            , parameters: (datetime.date(2026, 8, 24), 'GASOHOL95', 37.69)
+[2026-09-08T06:44:50.842+0000] {sql.py:562} INFO - Rows affected: 1
+[2026-09-08T06:44:50.859+0000] {sql.py:553} INFO - Running statement: 
+            INSERT INTO oil_price_history (date, symbol, price)
+            VALUES (%s, %s, %s)
+            ON CONFLICT (date, symbol) DO NOTHING;
+            , parameters: (datetime.date(2026, 8, 25), 'GASOHOL95', 37.69)
+[2026-09-08T06:44:50.863+0000] {sql.py:562} INFO - Rows affected: 1
+[2026-09-08T06:44:50.879+0000] {sql.py:553} INFO - Running statement: 
+            INSERT INTO oil_price_history (date, symbol, price)
+            VALUES (%s, %s, %s)
+            ON CONFLICT (date, symbol) DO NOTHING;
+            , parameters: (datetime.date(2026, 8, 26), 'GASOHOL95', 37.69)
+[2026-09-08T06:44:50.883+0000] {sql.py:562} INFO - Rows affected: 1
+[2026-09-08T06:44:50.900+0000] {sql.py:553} INFO - Running statement: 
+            INSERT INTO oil_price_history (date, symbol, price)
+            VALUES (%s, %s, %s)
+            ON CONFLICT (date, symbol) DO NOTHING;
+            , parameters: (datetime.date(2026, 8, 27), 'GASOHOL95', 37.69)
+[2026-09-08T06:44:50.903+0000] {sql.py:562} INFO - Rows affected: 1
+[2026-09-08T06:44:50.921+0000] {sql.py:553} INFO - Running statement: 
+            INSERT INTO oil_price_history (date, symbol, price)
+            VALUES (%s, %s, %s)
+            ON CONFLICT (date, symbol) DO NOTHING;
+            , parameters: (datetime.date(2026, 8, 28), 'GASOHOL95', 37.69)
+[2026-09-08T06:44:50.924+0000] {sql.py:562} INFO - Rows affected: 1
+[2026-09-08T06:44:50.942+0000] {sql.py:553} INFO - Running statement: 
+            INSERT INTO oil_price_history (date, symbol, price)
+            VALUES (%s, %s, %s)
+            ON CONFLICT (date, symbol) DO NOTHING;
+            , parameters: (datetime.date(2026, 8, 29), 'GASOHOL95', 37.69)
+[2026-09-08T06:44:50.945+0000] {sql.py:562} INFO - Rows affected: 1
+[2026-09-08T06:44:50.961+0000] {sql.py:553} INFO - Running statement: 
+            INSERT INTO oil_price_history (date, symbol, price)
+            VALUES (%s, %s, %s)
+            ON CONFLICT (date, symbol) DO NOTHING;
+            , parameters: (datetime.date(2026, 8, 30), 'GASOHOL95', 37.69)
+[2026-09-08T06:44:50.965+0000] {sql.py:562} INFO - Rows affected: 1
+[2026-09-08T06:44:50.982+0000] {sql.py:553} INFO - Running statement: 
+            INSERT INTO oil_price_history (date, symbol, price)
+            VALUES (%s, %s, %s)
+            ON CONFLICT (date, symbol) DO NOTHING;
+            , parameters: (datetime.date(2026, 8, 31), 'GASOHOL95', 37.69)
+[2026-09-08T06:44:50.985+0000] {sql.py:562} INFO - Rows affected: 1
+[2026-09-08T06:44:51.003+0000] {sql.py:553} INFO - Running statement: 
+            INSERT INTO oil_price_history (date, symbol, price)
+            VALUES (%s, %s, %s)
+            ON CONFLICT (date, symbol) DO NOTHING;
+            , parameters: (datetime.date(2026, 9, 1), 'GASOHOL95', 37.69)
+[2026-09-08T06:44:51.007+0000] {sql.py:562} INFO - Rows affected: 1
+[2026-09-08T06:44:51.025+0000] {sql.py:553} INFO - Running statement: 
+            INSERT INTO oil_price_history (date, symbol, price)
+            VALUES (%s, %s, %s)
+            ON CONFLICT (date, symbol) DO NOTHING;
+            , parameters: (datetime.date(2026, 9, 2), 'GASOHOL95', 38.29)
+[2026-09-08T06:44:51.028+0000] {sql.py:562} INFO - Rows affected: 1
+[2026-09-08T06:44:51.045+0000] {sql.py:553} INFO - Running statement: 
+            INSERT INTO oil_price_history (date, symbol, price)
+            VALUES (%s, %s, %s)
+            ON CONFLICT (date, symbol) DO NOTHING;
+            , parameters: (datetime.date(2026, 9, 3), 'GASOHOL95', 38.29)
+[2026-09-08T06:44:51.049+0000] {sql.py:562} INFO - Rows affected: 1
+[2026-09-08T06:44:51.073+0000] {sql.py:553} INFO - Running statement: 
+            INSERT INTO oil_price_history (date, symbol, price)
+            VALUES (%s, %s, %s)
+            ON CONFLICT (date, symbol) DO NOTHING;
+            , parameters: (datetime.date(2026, 9, 4), 'GASOHOL95', 38.29)
+[2026-09-08T06:44:51.076+0000] {sql.py:562} INFO - Rows affected: 1
+[2026-09-08T06:44:51.098+0000] {sql.py:553} INFO - Running statement: 
+            INSERT INTO oil_price_history (date, symbol, price)
+            VALUES (%s, %s, %s)
+            ON CONFLICT (date, symbol) DO NOTHING;
+            , parameters: (datetime.date(2026, 9, 5), 'GASOHOL95', 38.29)
+[2026-09-08T06:44:51.101+0000] {sql.py:562} INFO - Rows affected: 1
+[2026-09-08T06:44:51.122+0000] {sql.py:553} INFO - Running statement: 
+            INSERT INTO oil_price_history (date, symbol, price)
+            VALUES (%s, %s, %s)
+            ON CONFLICT (date, symbol) DO NOTHING;
+            , parameters: (datetime.date(2026, 9, 6), 'GASOHOL95', 38.29)
+[2026-09-08T06:44:51.125+0000] {sql.py:562} INFO - Rows affected: 1
+[2026-09-08T06:44:51.145+0000] {sql.py:553} INFO - Running statement: 
+            INSERT INTO oil_price_history (date, symbol, price)
+            VALUES (%s, %s, %s)
+            ON CONFLICT (date, symbol) DO NOTHING;
+            , parameters: (datetime.date(2026, 9, 7), 'GASOHOL95', 38.29)
+[2026-09-08T06:44:51.149+0000] {sql.py:562} INFO - Rows affected: 1
+[2026-09-08T06:44:51.169+0000] {sql.py:553} INFO - Running statement: 
+            INSERT INTO oil_price_history (date, symbol, price)
+            VALUES (%s, %s, %s)
+            ON CONFLICT (date, symbol) DO NOTHING;
+            , parameters: (datetime.date(2026, 9, 8), 'GASOHOL95', 38.29)
+[2026-09-08T06:44:51.172+0000] {sql.py:562} INFO - Rows affected: 1
+[2026-09-08T06:44:51.190+0000] {sql.py:553} INFO - Running statement: SELECT COUNT(*) FROM oil_price_history WHERE symbol = %s;, parameters: ('GASOHOL95',)
+[2026-09-08T06:44:51.194+0000] {sql.py:562} INFO - Rows affected: 1
+[2026-09-08T06:44:51.220+0000] {logging_mixin.py:190} INFO - Bootstrap เสร็จ: พยายามเพิ่ม 60 แถว, รวมในฐานข้อมูล 60 วัน
+[2026-09-08T06:44:51.222+0000] {python.py:240} INFO - Done. Returned value was: None
+[2026-09-08T06:44:51.248+0000] {taskinstance.py:340} INFO - ::group::Post task execution logs
+[2026-09-08T06:44:51.249+0000] {taskinstance.py:352} INFO - Marking task as SUCCESS. dag_id=oil_price_pipeline_dag, task_id=bootstrap_historical_data, run_id=manual__2026-09-08T06:43:58.628877+00:00, execution_date=20260908T064358, start_date=20260908T064405, end_date=20260908T064451
+[2026-09-08T06:44:51.324+0000] {local_task_job_runner.py:266} INFO - Task exited with return code 0
+[2026-09-08T06:44:51.345+0000] {local_task_job_runner.py:245} INFO - ::endgroup::

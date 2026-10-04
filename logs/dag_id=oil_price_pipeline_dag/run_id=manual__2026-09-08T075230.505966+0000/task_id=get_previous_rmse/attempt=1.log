@@ -1,0 +1,31 @@
+[2026-09-08T07:52:57.767+0000] {local_task_job_runner.py:123} INFO - ::group::Pre task execution logs
+[2026-09-08T07:52:57.792+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: oil_price_pipeline_dag.get_previous_rmse manual__2026-09-08T07:52:30.505966+00:00 [queued]>
+[2026-09-08T07:52:57.801+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: oil_price_pipeline_dag.get_previous_rmse manual__2026-09-08T07:52:30.505966+00:00 [queued]>
+[2026-09-08T07:52:57.802+0000] {taskinstance.py:2866} INFO - Starting attempt 1 of 2
+[2026-09-08T07:52:58.018+0000] {taskinstance.py:2889} INFO - Executing <Task(PythonOperator): get_previous_rmse> on 2026-09-08 07:52:30.505966+00:00
+[2026-09-08T07:52:58.027+0000] {warnings.py:112} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:70: DeprecationWarning: This process (pid=174) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  pid = os.fork()
+
+[2026-09-08T07:52:58.030+0000] {standard_task_runner.py:72} INFO - Started process 176 to run task
+[2026-09-08T07:52:58.030+0000] {standard_task_runner.py:104} INFO - Running: ['***', 'tasks', 'run', 'oil_price_pipeline_dag', 'get_previous_rmse', 'manual__2026-09-08T07:52:30.505966+00:00', '--job-id', '24', '--raw', '--subdir', 'DAGS_FOLDER/ml_03_oil_pipeline.py', '--cfg-path', '/tmp/tmp1idck5rl']
+[2026-09-08T07:52:58.034+0000] {standard_task_runner.py:105} INFO - Job 24: Subtask get_previous_rmse
+[2026-09-08T07:52:58.282+0000] {task_command.py:467} INFO - Running <TaskInstance: oil_price_pipeline_dag.get_previous_rmse manual__2026-09-08T07:52:30.505966+00:00 [running]> on host 7f2a6a45d3d5
+[2026-09-08T07:52:58.382+0000] {taskinstance.py:3132} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='workshop2' AIRFLOW_CTX_DAG_ID='oil_price_pipeline_dag' AIRFLOW_CTX_TASK_ID='get_previous_rmse' AIRFLOW_CTX_EXECUTION_DATE='2026-09-08T07:52:30.505966+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-09-08T07:52:30.505966+00:00'
+[2026-09-08T07:52:58.384+0000] {taskinstance.py:731} INFO - ::endgroup::
+[2026-09-08T07:52:58.409+0000] {base.py:84} INFO - Retrieving connection 'postgres_target'
+[2026-09-08T07:52:58.418+0000] {sql.py:553} INFO - Running statement: 
+        SELECT rmse
+        FROM model_metrics
+        WHERE model_name = %s
+          AND deployed = TRUE
+        ORDER BY run_at DESC
+        LIMIT 1;
+        , parameters: ('gasohol_95_thailand',)
+[2026-09-08T07:52:58.422+0000] {sql.py:562} INFO - Rows affected: 1
+[2026-09-08T07:52:58.441+0000] {logging_mixin.py:190} INFO - Champion RMSE เดิม = 0.0358 บาท/ลิตร
+[2026-09-08T07:52:58.442+0000] {python.py:240} INFO - Done. Returned value was: None
+[2026-09-08T07:52:58.458+0000] {taskinstance.py:340} INFO - ::group::Post task execution logs
+[2026-09-08T07:52:58.459+0000] {taskinstance.py:352} INFO - Marking task as SUCCESS. dag_id=oil_price_pipeline_dag, task_id=get_previous_rmse, run_id=manual__2026-09-08T07:52:30.505966+00:00, execution_date=20260908T075230, start_date=20260908T075257, end_date=20260908T075258
+[2026-09-08T07:52:58.488+0000] {local_task_job_runner.py:266} INFO - Task exited with return code 0
+[2026-09-08T07:52:58.714+0000] {taskinstance.py:3895} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2026-09-08T07:52:58.717+0000] {local_task_job_runner.py:245} INFO - ::endgroup::

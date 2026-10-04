@@ -1,0 +1,26 @@
+[2026-08-30T15:18:30.022+0000] {local_task_job_runner.py:123} INFO - ::group::Pre task execution logs
+[2026-08-30T15:18:30.035+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: iris_pipeline_dag.smoke_test manual__2026-08-30T15:18:12.917018+00:00 [queued]>
+[2026-08-30T15:18:30.039+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: iris_pipeline_dag.smoke_test manual__2026-08-30T15:18:12.917018+00:00 [queued]>
+[2026-08-30T15:18:30.040+0000] {taskinstance.py:2866} INFO - Starting attempt 1 of 2
+[2026-08-30T15:18:30.046+0000] {taskinstance.py:2889} INFO - Executing <Task(PythonOperator): smoke_test> on 2026-08-30 15:18:12.917018+00:00
+[2026-08-30T15:18:30.055+0000] {standard_task_runner.py:104} INFO - Running: ['***', 'tasks', 'run', 'iris_pipeline_dag', 'smoke_test', 'manual__2026-08-30T15:18:12.917018+00:00', '--job-id', '81', '--raw', '--subdir', 'DAGS_FOLDER/ml_01_iris_pipeline-3.py', '--cfg-path', '/tmp/tmpxvc6d456']
+[2026-08-30T15:18:30.054+0000] {warnings.py:112} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:70: DeprecationWarning: This process (pid=202) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  pid = os.fork()
+
+[2026-08-30T15:18:30.056+0000] {standard_task_runner.py:72} INFO - Started process 203 to run task
+[2026-08-30T15:18:30.056+0000] {standard_task_runner.py:105} INFO - Job 81: Subtask smoke_test
+[2026-08-30T15:18:30.103+0000] {task_command.py:467} INFO - Running <TaskInstance: iris_pipeline_dag.smoke_test manual__2026-08-30T15:18:12.917018+00:00 [running]> on host 191b4096755e
+[2026-08-30T15:18:30.159+0000] {taskinstance.py:3132} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='workshop2' AIRFLOW_CTX_DAG_ID='iris_pipeline_dag' AIRFLOW_CTX_TASK_ID='smoke_test' AIRFLOW_CTX_EXECUTION_DATE='2026-08-30T15:18:12.917018+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-08-30T15:18:12.917018+00:00'
+[2026-08-30T15:18:30.160+0000] {taskinstance.py:731} INFO - ::endgroup::
+[2026-08-30T15:18:31.235+0000] {logging_mixin.py:190} INFO - ===== Smoke Test: เรียกใช้งานโมเดลที่เพิ่ง deploy =====
+[2026-08-30T15:18:31.235+0000] {logging_mixin.py:190} INFO - แถว 0: จริง=setosa, ทาย=setosa (ถูก)
+[2026-08-30T15:18:31.235+0000] {logging_mixin.py:190} INFO - แถว 1: จริง=setosa, ทาย=setosa (ถูก)
+[2026-08-30T15:18:31.236+0000] {logging_mixin.py:190} INFO - แถว 2: จริง=setosa, ทาย=setosa (ถูก)
+[2026-08-30T15:18:31.236+0000] {logging_mixin.py:190} INFO - สรุป Smoke Test: ทายถูก 3/3 แถวตัวอย่าง
+[2026-08-30T15:18:31.236+0000] {logging_mixin.py:190} INFO - โมเดลใช้งานได้จริง พร้อมให้บริการ
+[2026-08-30T15:18:31.236+0000] {python.py:240} INFO - Done. Returned value was: None
+[2026-08-30T15:18:31.247+0000] {taskinstance.py:340} INFO - ::group::Post task execution logs
+[2026-08-30T15:18:31.247+0000] {taskinstance.py:352} INFO - Marking task as SUCCESS. dag_id=iris_pipeline_dag, task_id=smoke_test, run_id=manual__2026-08-30T15:18:12.917018+00:00, execution_date=20260830T151812, start_date=20260830T151830, end_date=20260830T151831
+[2026-08-30T15:18:31.285+0000] {local_task_job_runner.py:266} INFO - Task exited with return code 0
+[2026-08-30T15:18:31.326+0000] {taskinstance.py:3895} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2026-08-30T15:18:31.327+0000] {local_task_job_runner.py:245} INFO - ::endgroup::

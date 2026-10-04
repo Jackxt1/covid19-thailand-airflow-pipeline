@@ -1,0 +1,109 @@
+[2026-08-30T16:36:11.493+0000] {local_task_job_runner.py:123} INFO - ::group::Pre task execution logs
+[2026-08-30T16:36:11.507+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: weather_pipeline_dag.bootstrap_historical_data manual__2026-08-30T16:36:07.537840+00:00 [queued]>
+[2026-08-30T16:36:11.512+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: weather_pipeline_dag.bootstrap_historical_data manual__2026-08-30T16:36:07.537840+00:00 [queued]>
+[2026-08-30T16:36:11.512+0000] {taskinstance.py:2866} INFO - Starting attempt 1 of 2
+[2026-08-30T16:36:11.518+0000] {taskinstance.py:2889} INFO - Executing <Task(PythonOperator): bootstrap_historical_data> on 2026-08-30 16:36:07.537840+00:00
+[2026-08-30T16:36:11.522+0000] {warnings.py:112} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:70: DeprecationWarning: This process (pid=1243) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  pid = os.fork()
+
+[2026-08-30T16:36:11.523+0000] {standard_task_runner.py:72} INFO - Started process 1244 to run task
+[2026-08-30T16:36:11.523+0000] {standard_task_runner.py:104} INFO - Running: ['***', 'tasks', 'run', 'weather_pipeline_dag', 'bootstrap_historical_data', 'manual__2026-08-30T16:36:07.537840+00:00', '--job-id', '84', '--raw', '--subdir', 'DAGS_FOLDER/ml_02_weather_pipeline.py', '--cfg-path', '/tmp/tmp0x371_ex']
+[2026-08-30T16:36:11.525+0000] {standard_task_runner.py:105} INFO - Job 84: Subtask bootstrap_historical_data
+[2026-08-30T16:36:11.563+0000] {task_command.py:467} INFO - Running <TaskInstance: weather_pipeline_dag.bootstrap_historical_data manual__2026-08-30T16:36:07.537840+00:00 [running]> on host 191b4096755e
+[2026-08-30T16:36:12.171+0000] {taskinstance.py:3132} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='workshop2' AIRFLOW_CTX_DAG_ID='weather_pipeline_dag' AIRFLOW_CTX_TASK_ID='bootstrap_historical_data' AIRFLOW_CTX_EXECUTION_DATE='2026-08-30T16:36:07.537840+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-08-30T16:36:07.537840+00:00'
+[2026-08-30T16:36:12.172+0000] {taskinstance.py:731} INFO - ::endgroup::
+[2026-08-30T16:36:12.188+0000] {base.py:84} INFO - Retrieving connection 'postgres_target'
+[2026-08-30T16:36:12.196+0000] {sql.py:553} INFO - Running statement: SELECT COUNT(*) FROM weather_history WHERE province = %s;, parameters: ('กรุงเทพฯ',)
+[2026-08-30T16:36:12.206+0000] {sql.py:562} INFO - Rows affected: 1
+[2026-08-30T16:36:12.207+0000] {logging_mixin.py:190} INFO - มีข้อมูลย้อนหลังอยู่แล้ว 0 วัน (ต้องการอย่างน้อย 14 วัน)
+[2026-08-30T16:36:13.107+0000] {sql.py:553} INFO - Running statement: 
+            INSERT INTO weather_history (date, province, temperature)
+            VALUES (%s, %s, %s)
+            ON CONFLICT (date, province) DO NOTHING;
+            , parameters: ('2026-08-16', 'กรุงเทพฯ', 29.2)
+[2026-08-30T16:36:13.113+0000] {sql.py:562} INFO - Rows affected: 1
+[2026-08-30T16:36:13.124+0000] {sql.py:553} INFO - Running statement: 
+            INSERT INTO weather_history (date, province, temperature)
+            VALUES (%s, %s, %s)
+            ON CONFLICT (date, province) DO NOTHING;
+            , parameters: ('2026-08-17', 'กรุงเทพฯ', 28.3)
+[2026-08-30T16:36:13.127+0000] {sql.py:562} INFO - Rows affected: 1
+[2026-08-30T16:36:13.139+0000] {sql.py:553} INFO - Running statement: 
+            INSERT INTO weather_history (date, province, temperature)
+            VALUES (%s, %s, %s)
+            ON CONFLICT (date, province) DO NOTHING;
+            , parameters: ('2026-08-18', 'กรุงเทพฯ', 28.1)
+[2026-08-30T16:36:13.141+0000] {sql.py:562} INFO - Rows affected: 1
+[2026-08-30T16:36:13.149+0000] {sql.py:553} INFO - Running statement: 
+            INSERT INTO weather_history (date, province, temperature)
+            VALUES (%s, %s, %s)
+            ON CONFLICT (date, province) DO NOTHING;
+            , parameters: ('2026-08-19', 'กรุงเทพฯ', 27.9)
+[2026-08-30T16:36:13.151+0000] {sql.py:562} INFO - Rows affected: 1
+[2026-08-30T16:36:13.157+0000] {sql.py:553} INFO - Running statement: 
+            INSERT INTO weather_history (date, province, temperature)
+            VALUES (%s, %s, %s)
+            ON CONFLICT (date, province) DO NOTHING;
+            , parameters: ('2026-08-20', 'กรุงเทพฯ', 26.9)
+[2026-08-30T16:36:13.158+0000] {sql.py:562} INFO - Rows affected: 1
+[2026-08-30T16:36:13.164+0000] {sql.py:553} INFO - Running statement: 
+            INSERT INTO weather_history (date, province, temperature)
+            VALUES (%s, %s, %s)
+            ON CONFLICT (date, province) DO NOTHING;
+            , parameters: ('2026-08-21', 'กรุงเทพฯ', 27.7)
+[2026-08-30T16:36:13.166+0000] {sql.py:562} INFO - Rows affected: 1
+[2026-08-30T16:36:13.179+0000] {sql.py:553} INFO - Running statement: 
+            INSERT INTO weather_history (date, province, temperature)
+            VALUES (%s, %s, %s)
+            ON CONFLICT (date, province) DO NOTHING;
+            , parameters: ('2026-08-22', 'กรุงเทพฯ', 27.6)
+[2026-08-30T16:36:13.181+0000] {sql.py:562} INFO - Rows affected: 1
+[2026-08-30T16:36:13.190+0000] {sql.py:553} INFO - Running statement: 
+            INSERT INTO weather_history (date, province, temperature)
+            VALUES (%s, %s, %s)
+            ON CONFLICT (date, province) DO NOTHING;
+            , parameters: ('2026-08-23', 'กรุงเทพฯ', 27.0)
+[2026-08-30T16:36:13.192+0000] {sql.py:562} INFO - Rows affected: 1
+[2026-08-30T16:36:13.198+0000] {sql.py:553} INFO - Running statement: 
+            INSERT INTO weather_history (date, province, temperature)
+            VALUES (%s, %s, %s)
+            ON CONFLICT (date, province) DO NOTHING;
+            , parameters: ('2026-08-24', 'กรุงเทพฯ', 29.0)
+[2026-08-30T16:36:13.200+0000] {sql.py:562} INFO - Rows affected: 1
+[2026-08-30T16:36:13.207+0000] {sql.py:553} INFO - Running statement: 
+            INSERT INTO weather_history (date, province, temperature)
+            VALUES (%s, %s, %s)
+            ON CONFLICT (date, province) DO NOTHING;
+            , parameters: ('2026-08-25', 'กรุงเทพฯ', 28.7)
+[2026-08-30T16:36:13.208+0000] {sql.py:562} INFO - Rows affected: 1
+[2026-08-30T16:36:13.215+0000] {sql.py:553} INFO - Running statement: 
+            INSERT INTO weather_history (date, province, temperature)
+            VALUES (%s, %s, %s)
+            ON CONFLICT (date, province) DO NOTHING;
+            , parameters: ('2026-08-26', 'กรุงเทพฯ', 28.2)
+[2026-08-30T16:36:13.216+0000] {sql.py:562} INFO - Rows affected: 1
+[2026-08-30T16:36:13.221+0000] {sql.py:553} INFO - Running statement: 
+            INSERT INTO weather_history (date, province, temperature)
+            VALUES (%s, %s, %s)
+            ON CONFLICT (date, province) DO NOTHING;
+            , parameters: ('2026-08-27', 'กรุงเทพฯ', 28.6)
+[2026-08-30T16:36:13.222+0000] {sql.py:562} INFO - Rows affected: 1
+[2026-08-30T16:36:13.229+0000] {sql.py:553} INFO - Running statement: 
+            INSERT INTO weather_history (date, province, temperature)
+            VALUES (%s, %s, %s)
+            ON CONFLICT (date, province) DO NOTHING;
+            , parameters: ('2026-08-28', 'กรุงเทพฯ', 27.8)
+[2026-08-30T16:36:13.230+0000] {sql.py:562} INFO - Rows affected: 1
+[2026-08-30T16:36:13.235+0000] {sql.py:553} INFO - Running statement: 
+            INSERT INTO weather_history (date, province, temperature)
+            VALUES (%s, %s, %s)
+            ON CONFLICT (date, province) DO NOTHING;
+            , parameters: ('2026-08-29', 'กรุงเทพฯ', 27.6)
+[2026-08-30T16:36:13.236+0000] {sql.py:562} INFO - Rows affected: 1
+[2026-08-30T16:36:13.237+0000] {logging_mixin.py:190} INFO - Bootstrap เสร็จ: ดึงข้อมูลย้อนหลังมาเพิ่ม 14 วัน
+[2026-08-30T16:36:13.238+0000] {python.py:240} INFO - Done. Returned value was: None
+[2026-08-30T16:36:13.248+0000] {taskinstance.py:340} INFO - ::group::Post task execution logs
+[2026-08-30T16:36:13.249+0000] {taskinstance.py:352} INFO - Marking task as SUCCESS. dag_id=weather_pipeline_dag, task_id=bootstrap_historical_data, run_id=manual__2026-08-30T16:36:07.537840+00:00, execution_date=20260830T163607, start_date=20260830T163611, end_date=20260830T163613
+[2026-08-30T16:36:13.311+0000] {local_task_job_runner.py:266} INFO - Task exited with return code 0
+[2026-08-30T16:36:13.640+0000] {taskinstance.py:3895} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2026-08-30T16:36:13.641+0000] {local_task_job_runner.py:245} INFO - ::endgroup::

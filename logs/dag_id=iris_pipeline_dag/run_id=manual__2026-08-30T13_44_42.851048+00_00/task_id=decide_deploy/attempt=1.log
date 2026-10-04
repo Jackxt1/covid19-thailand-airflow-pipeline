@@ -1,0 +1,25 @@
+[2026-08-30T13:44:55.705+0000] {local_task_job_runner.py:123} INFO - ::group::Pre task execution logs
+[2026-08-30T13:44:55.716+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: iris_pipeline_dag.decide_deploy manual__2026-08-30T13:44:42.851048+00:00 [queued]>
+[2026-08-30T13:44:55.720+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: iris_pipeline_dag.decide_deploy manual__2026-08-30T13:44:42.851048+00:00 [queued]>
+[2026-08-30T13:44:55.721+0000] {taskinstance.py:2866} INFO - Starting attempt 1 of 2
+[2026-08-30T13:44:55.726+0000] {taskinstance.py:2889} INFO - Executing <Task(BranchPythonOperator): decide_deploy> on 2026-08-30 13:44:42.851048+00:00
+[2026-08-30T13:44:55.730+0000] {warnings.py:112} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:70: DeprecationWarning: This process (pid=522) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  pid = os.fork()
+
+[2026-08-30T13:44:55.731+0000] {standard_task_runner.py:72} INFO - Started process 523 to run task
+[2026-08-30T13:44:55.732+0000] {standard_task_runner.py:104} INFO - Running: ['***', 'tasks', 'run', 'iris_pipeline_dag', 'decide_deploy', 'manual__2026-08-30T13:44:42.851048+00:00', '--job-id', '60', '--raw', '--subdir', 'DAGS_FOLDER/ml_01_iris_pipeline.py', '--cfg-path', '/tmp/tmpsuzff630']
+[2026-08-30T13:44:55.733+0000] {standard_task_runner.py:105} INFO - Job 60: Subtask decide_deploy
+[2026-08-30T13:44:55.777+0000] {task_command.py:467} INFO - Running <TaskInstance: iris_pipeline_dag.decide_deploy manual__2026-08-30T13:44:42.851048+00:00 [running]> on host 1c59b6033015
+[2026-08-30T13:44:55.824+0000] {taskinstance.py:3132} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='workshop2' AIRFLOW_CTX_DAG_ID='iris_pipeline_dag' AIRFLOW_CTX_TASK_ID='decide_deploy' AIRFLOW_CTX_EXECUTION_DATE='2026-08-30T13:44:42.851048+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-08-30T13:44:42.851048+00:00'
+[2026-08-30T13:44:55.825+0000] {taskinstance.py:731} INFO - ::endgroup::
+[2026-08-30T13:44:55.834+0000] {baseoperator.py:421} WARNING - BranchPythonOperator.execute cannot be called outside TaskInstance!
+[2026-08-30T13:44:55.844+0000] {logging_mixin.py:190} INFO - accuracy 1.0000 > 0.9 -> เลือกเส้นทาง deploy_model
+[2026-08-30T13:44:55.844+0000] {python.py:240} INFO - Done. Returned value was: deploy_model
+[2026-08-30T13:44:55.844+0000] {branch.py:38} INFO - Branch into deploy_model
+[2026-08-30T13:44:55.844+0000] {skipmixin.py:230} INFO - Following branch ('deploy_model',)
+[2026-08-30T13:44:55.852+0000] {skipmixin.py:278} INFO - Skipping tasks [('skip_deploy', -1)]
+[2026-08-30T13:44:55.871+0000] {taskinstance.py:340} INFO - ::group::Post task execution logs
+[2026-08-30T13:44:55.871+0000] {taskinstance.py:352} INFO - Marking task as SUCCESS. dag_id=iris_pipeline_dag, task_id=decide_deploy, run_id=manual__2026-08-30T13:44:42.851048+00:00, execution_date=20260830T134442, start_date=20260830T134455, end_date=20260830T134455
+[2026-08-30T13:44:55.905+0000] {local_task_job_runner.py:266} INFO - Task exited with return code 0
+[2026-08-30T13:44:55.923+0000] {taskinstance.py:3895} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2026-08-30T13:44:55.923+0000] {local_task_job_runner.py:245} INFO - ::endgroup::

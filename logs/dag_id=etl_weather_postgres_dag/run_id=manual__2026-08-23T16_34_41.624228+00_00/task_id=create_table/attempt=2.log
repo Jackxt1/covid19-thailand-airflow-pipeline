@@ -1,0 +1,43 @@
+[2026-08-23T16:37:29.356+0000] {local_task_job_runner.py:123} INFO - ::group::Pre task execution logs
+[2026-08-23T16:37:29.381+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: etl_weather_postgres_dag.create_table manual__2026-08-23T16:34:41.624228+00:00 [queued]>
+[2026-08-23T16:37:29.390+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: etl_weather_postgres_dag.create_table manual__2026-08-23T16:34:41.624228+00:00 [queued]>
+[2026-08-23T16:37:29.390+0000] {taskinstance.py:2866} INFO - Starting attempt 2 of 2
+[2026-08-23T16:37:29.404+0000] {taskinstance.py:2889} INFO - Executing <Task(PostgresOperator): create_table> on 2026-08-23 16:34:41.624228+00:00
+[2026-08-23T16:37:29.421+0000] {warnings.py:112} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:70: DeprecationWarning: This process (pid=1366) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  pid = os.fork()
+
+[2026-08-23T16:37:29.425+0000] {standard_task_runner.py:72} INFO - Started process 1367 to run task
+[2026-08-23T16:37:29.423+0000] {standard_task_runner.py:104} INFO - Running: ['***', 'tasks', 'run', 'etl_weather_postgres_dag', 'create_table', 'manual__2026-08-23T16:34:41.624228+00:00', '--job-id', '40', '--raw', '--subdir', 'DAGS_FOLDER/05_etl_weather_postgres.py', '--cfg-path', '/tmp/tmpxjep6red']
+[2026-08-23T16:37:29.428+0000] {standard_task_runner.py:105} INFO - Job 40: Subtask create_table
+[2026-08-23T16:37:29.590+0000] {task_command.py:467} INFO - Running <TaskInstance: etl_weather_postgres_dag.create_table manual__2026-08-23T16:34:41.624228+00:00 [running]> on host 417225d49ca8
+[2026-08-23T16:37:29.800+0000] {taskinstance.py:3132} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='workshop' AIRFLOW_CTX_DAG_ID='etl_weather_postgres_dag' AIRFLOW_CTX_TASK_ID='create_table' AIRFLOW_CTX_EXECUTION_DATE='2026-08-23T16:34:41.624228+00:00' AIRFLOW_CTX_TRY_NUMBER='2' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-08-23T16:34:41.624228+00:00'
+[2026-08-23T16:37:29.806+0000] {taskinstance.py:731} INFO - ::endgroup::
+[2026-08-23T16:37:29.885+0000] {sql.py:278} INFO - Executing: 
+CREATE TABLE IF NOT EXISTS weather_records (
+    id SERIAL PRIMARY KEY,
+    province VARCHAR(50) NOT NULL,
+    temperature FLOAT NOT NULL,
+    windspeed FLOAT,
+    weathercode INT,
+    temperature_category VARCHAR(20),
+    recorded_at TIMESTAMP,
+    ingested_at TIMESTAMP DEFAULT NOW()
+);
+[2026-08-23T16:37:29.920+0000] {base.py:84} INFO - Retrieving connection 'postgres_target'
+[2026-08-23T16:37:29.952+0000] {base.py:84} INFO - Retrieving connection 'postgres_target'
+[2026-08-23T16:37:29.968+0000] {sql.py:553} INFO - Running statement: 
+CREATE TABLE IF NOT EXISTS weather_records (
+    id SERIAL PRIMARY KEY,
+    province VARCHAR(50) NOT NULL,
+    temperature FLOAT NOT NULL,
+    windspeed FLOAT,
+    weathercode INT,
+    temperature_category VARCHAR(20),
+    recorded_at TIMESTAMP,
+    ingested_at TIMESTAMP DEFAULT NOW()
+);, parameters: None
+[2026-08-23T16:37:29.983+0000] {taskinstance.py:340} INFO - ::group::Post task execution logs
+[2026-08-23T16:37:29.984+0000] {taskinstance.py:352} INFO - Marking task as SUCCESS. dag_id=etl_weather_postgres_dag, task_id=create_table, run_id=manual__2026-08-23T16:34:41.624228+00:00, execution_date=20260823T163441, start_date=20260823T163729, end_date=20260823T163729
+[2026-08-23T16:37:30.024+0000] {local_task_job_runner.py:266} INFO - Task exited with return code 0
+[2026-08-23T16:37:30.122+0000] {taskinstance.py:3895} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2026-08-23T16:37:30.123+0000] {local_task_job_runner.py:245} INFO - ::endgroup::
