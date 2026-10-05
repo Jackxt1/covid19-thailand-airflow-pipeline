@@ -18,6 +18,7 @@ from fastapi.responses import HTMLResponse
 
 from oil import router as oil_router, oil_model_file_info, OIL_FORM_HTML
 from covid import router as covid_router, covid_pipeline_status
+from quakes import router as quakes_router, quake_pipeline_status
 
 
 app = FastAPI(
@@ -31,6 +32,9 @@ app.include_router(oil_router)
 # เพิ่มหน้าแดชบอร์ด /covid และ endpoint /api/covid/* จาก covid.py
 app.include_router(covid_router)
 
+# เพิ่มหน้าแดชบอร์ด /quakes และ endpoint /api/quakes/* จาก quakes.py
+app.include_router(quakes_router)
+
 
 @app.get("/health")
 def health():
@@ -42,6 +46,7 @@ def health():
         "status": "ok",
         "oil_model": oil_info,
         "covid_dashboard": covid_pipeline_status(),
+        "quake_dashboard": quake_pipeline_status(),
     }
 
 

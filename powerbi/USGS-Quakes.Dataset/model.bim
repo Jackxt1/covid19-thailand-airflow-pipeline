@@ -1,0 +1,423 @@
+{
+  "name": "USGS-Quakes",
+  "compatibilityLevel": 1567,
+  "model": {
+    "culture": "th-TH",
+    "dataAccessOptions": {
+      "legacyRedirects": true,
+      "returnErrorValuesAsNull": true
+    },
+    "defaultPowerBIDataSourceVersion": "powerBI_V3",
+    "sourceQueryCulture": "th-TH",
+    "tables": [
+      {
+        "name": "fact_quakes",
+        "columns": [
+          {
+            "name": "เดือน",
+            "dataType": "dateTime",
+            "formatString": "yyyy-mm-dd",
+            "sourceColumn": "เดือน",
+            "summarizeBy": "none",
+            "annotations": [
+              { "name": "SummarizationSetBy", "value": "Automatic" },
+              { "name": "UnderlyingDateTimeDataType", "value": "Date" }
+            ]
+          },
+          {
+            "name": "ภูมิภาค",
+            "dataType": "string",
+            "sourceColumn": "ภูมิภาค",
+            "summarizeBy": "none",
+            "annotations": [ { "name": "SummarizationSetBy", "value": "Automatic" } ]
+          },
+          {
+            "name": "ช่วงขนาด",
+            "dataType": "string",
+            "sourceColumn": "ช่วงขนาด",
+            "summarizeBy": "none",
+            "annotations": [ { "name": "SummarizationSetBy", "value": "Automatic" } ]
+          },
+          {
+            "name": "ช่วงความลึก",
+            "dataType": "string",
+            "sourceColumn": "ช่วงความลึก",
+            "summarizeBy": "none",
+            "annotations": [ { "name": "SummarizationSetBy", "value": "Automatic" } ]
+          },
+          {
+            "name": "จำนวนเหตุการณ์",
+            "dataType": "int64",
+            "formatString": "#,0",
+            "sourceColumn": "จำนวนเหตุการณ์",
+            "summarizeBy": "sum",
+            "annotations": [ { "name": "SummarizationSetBy", "value": "Automatic" } ]
+          },
+          {
+            "name": "ขนาดเฉลี่ย",
+            "dataType": "double",
+            "formatString": "0.00",
+            "sourceColumn": "ขนาดเฉลี่ย",
+            "summarizeBy": "none",
+            "annotations": [ { "name": "SummarizationSetBy", "value": "User" } ]
+          },
+          {
+            "name": "ขนาดสูงสุด",
+            "dataType": "double",
+            "formatString": "0.0",
+            "sourceColumn": "ขนาดสูงสุด",
+            "summarizeBy": "none",
+            "annotations": [ { "name": "SummarizationSetBy", "value": "User" } ]
+          },
+          {
+            "name": "ความลึกเฉลี่ย",
+            "dataType": "double",
+            "formatString": "0.0",
+            "sourceColumn": "ความลึกเฉลี่ย",
+            "summarizeBy": "none",
+            "annotations": [ { "name": "SummarizationSetBy", "value": "User" } ]
+          }
+        ],
+        "measures": [
+          {
+            "name": "เหตุการณ์ทั้งหมด",
+            "expression": "SUM(fact_quakes[จำนวนเหตุการณ์])",
+            "formatString": "#,0"
+          },
+          {
+            "name": "ขนาดแรงที่สุด",
+            "expression": "MAX(fact_quakes[ขนาดสูงสุด])",
+            "formatString": "0.0"
+          },
+          {
+            "name": "จำนวนภูมิภาค",
+            "expression": "DISTINCTCOUNT(fact_quakes[ภูมิภาค])",
+            "formatString": "#,0"
+          },
+          {
+            "name": "เหตุการณ์ M6 ขึ้นไป",
+            "expression": [
+              "CALCULATE(",
+              "    [เหตุการณ์ทั้งหมด],",
+              "    fact_quakes[ช่วงขนาด] IN { \"6.0 - 6.9\", \"7.0 ขึ้นไป\" }",
+              ")"
+            ],
+            "formatString": "#,0"
+          },
+          {
+            "name": "ความลึกเฉลี่ยถ่วงน้ำหนัก",
+            "expression": [
+              "-- แต่ละแถวเป็นค่าเฉลี่ยของกลุ่มอยู่แล้ว เอามาเฉลี่ยซ้ำตรง ๆ จะผิด",
+              "-- ต้องถ่วงน้ำหนักด้วยจำนวนเหตุการณ์ของแถวนั้น",
+              "VAR TotalDepth =",
+              "    SUMX(",
+              "        fact_quakes,",
+              "        fact_quakes[ความลึกเฉลี่ย] * fact_quakes[จำนวนเหตุการณ์]",
+              "    )",
+              "RETURN",
+              "    DIVIDE(TotalDepth, [เหตุการณ์ทั้งหมด])"
+            ],
+            "formatString": "0.0"
+          },
+          {
+            "name": "สัดส่วน M6 ขึ้นไป",
+            "expression": "DIVIDE([เหตุการณ์ M6 ขึ้นไป], [เหตุการณ์ทั้งหมด])",
+            "formatString": "0.00%"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "fact_quakes",
+            "mode": "import",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = Csv.Document(File.Contents(\"D:\\data1\\95-\\exports\\quakes\\fact_quakes.csv\"),[Delimiter=\",\", Columns=8, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),",
+                "    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),",
+                "    Typed = Table.TransformColumnTypes(Headers,{{\"เดือน\", type date}, {\"ภูมิภาค\", type text}, {\"ช่วงขนาด\", type text}, {\"ช่วงความลึก\", type text}, {\"จำนวนเหตุการณ์\", Int64.Type}, {\"ขนาดเฉลี่ย\", type number}, {\"ขนาดสูงสุด\", type number}, {\"ความลึกเฉลี่ย\", type number}}, \"en-US\")",
+                "in",
+                "    Typed"
+              ]
+            }
+          }
+        ],
+        "annotations": [ { "name": "PBI_ResultType", "value": "Table" } ]
+      },
+      {
+        "name": "dim_month",
+        "columns": [
+          {
+            "name": "เดือน",
+            "dataType": "dateTime",
+            "formatString": "yyyy-mm-dd",
+            "sourceColumn": "เดือน",
+            "summarizeBy": "none",
+            "annotations": [
+              { "name": "SummarizationSetBy", "value": "Automatic" },
+              { "name": "UnderlyingDateTimeDataType", "value": "Date" }
+            ]
+          },
+          {
+            "name": "ปี ค.ศ.",
+            "dataType": "int64",
+            "formatString": "0",
+            "sourceColumn": "ปี ค.ศ.",
+            "summarizeBy": "none",
+            "annotations": [ { "name": "SummarizationSetBy", "value": "User" } ]
+          },
+          {
+            "name": "ปี พ.ศ.",
+            "dataType": "int64",
+            "formatString": "0",
+            "sourceColumn": "ปี พ.ศ.",
+            "summarizeBy": "none",
+            "annotations": [ { "name": "SummarizationSetBy", "value": "User" } ]
+          },
+          {
+            "name": "เลขเดือน",
+            "dataType": "int64",
+            "formatString": "0",
+            "sourceColumn": "เลขเดือน",
+            "summarizeBy": "none",
+            "annotations": [ { "name": "SummarizationSetBy", "value": "User" } ]
+          },
+          {
+            "name": "เดือนไทย",
+            "dataType": "string",
+            "sourceColumn": "เดือนไทย",
+            "sortByColumn": "เลขเดือน",
+            "summarizeBy": "none",
+            "annotations": [ { "name": "SummarizationSetBy", "value": "Automatic" } ]
+          },
+          {
+            "name": "ปีเดือน",
+            "dataType": "string",
+            "sourceColumn": "ปีเดือน",
+            "summarizeBy": "none",
+            "annotations": [ { "name": "SummarizationSetBy", "value": "Automatic" } ]
+          },
+          {
+            "name": "ไตรมาส",
+            "dataType": "int64",
+            "formatString": "0",
+            "sourceColumn": "ไตรมาส",
+            "summarizeBy": "none",
+            "annotations": [ { "name": "SummarizationSetBy", "value": "User" } ]
+          }
+        ],
+        "partitions": [
+          {
+            "name": "dim_month",
+            "mode": "import",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = Csv.Document(File.Contents(\"D:\\data1\\95-\\exports\\quakes\\dim_month.csv\"),[Delimiter=\",\", Columns=7, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),",
+                "    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),",
+                "    Typed = Table.TransformColumnTypes(Headers,{{\"เดือน\", type date}, {\"ปี ค.ศ.\", Int64.Type}, {\"ปี พ.ศ.\", Int64.Type}, {\"เลขเดือน\", Int64.Type}, {\"เดือนไทย\", type text}, {\"ปีเดือน\", type text}, {\"ไตรมาส\", Int64.Type}}, \"en-US\")",
+                "in",
+                "    Typed"
+              ]
+            }
+          }
+        ],
+        "annotations": [ { "name": "PBI_ResultType", "value": "Table" } ]
+      },
+      {
+        "name": "dim_region",
+        "columns": [
+          {
+            "name": "ภูมิภาค",
+            "dataType": "string",
+            "sourceColumn": "ภูมิภาค",
+            "summarizeBy": "none",
+            "annotations": [ { "name": "SummarizationSetBy", "value": "Automatic" } ]
+          },
+          {
+            "name": "จำนวนเหตุการณ์สะสม",
+            "dataType": "int64",
+            "formatString": "#,0",
+            "sourceColumn": "จำนวนเหตุการณ์",
+            "summarizeBy": "sum",
+            "annotations": [ { "name": "SummarizationSetBy", "value": "Automatic" } ]
+          },
+          {
+            "name": "ขนาดสูงสุดของภูมิภาค",
+            "dataType": "double",
+            "formatString": "0.0",
+            "sourceColumn": "ขนาดสูงสุด",
+            "summarizeBy": "none",
+            "annotations": [ { "name": "SummarizationSetBy", "value": "User" } ]
+          },
+          {
+            "name": "ความลึกเฉลี่ยของภูมิภาค",
+            "dataType": "double",
+            "formatString": "0.0",
+            "sourceColumn": "ความลึกเฉลี่ย",
+            "summarizeBy": "none",
+            "annotations": [ { "name": "SummarizationSetBy", "value": "User" } ]
+          },
+          {
+            "name": "อันดับ",
+            "dataType": "int64",
+            "formatString": "0",
+            "sourceColumn": "อันดับ",
+            "summarizeBy": "none",
+            "annotations": [ { "name": "SummarizationSetBy", "value": "User" } ]
+          }
+        ],
+        "partitions": [
+          {
+            "name": "dim_region",
+            "mode": "import",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = Csv.Document(File.Contents(\"D:\\data1\\95-\\exports\\quakes\\dim_region.csv\"),[Delimiter=\",\", Columns=5, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),",
+                "    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),",
+                "    Typed = Table.TransformColumnTypes(Headers,{{\"ภูมิภาค\", type text}, {\"จำนวนเหตุการณ์\", Int64.Type}, {\"ขนาดสูงสุด\", type number}, {\"ความลึกเฉลี่ย\", type number}, {\"อันดับ\", Int64.Type}}, \"en-US\")",
+                "in",
+                "    Typed"
+              ]
+            }
+          }
+        ],
+        "annotations": [ { "name": "PBI_ResultType", "value": "Table" } ]
+      },
+      {
+        "name": "dim_magnitude_band",
+        "columns": [
+          {
+            "name": "ช่วงขนาด",
+            "dataType": "string",
+            "sourceColumn": "ช่วงขนาด",
+            "sortByColumn": "ลำดับ",
+            "summarizeBy": "none",
+            "annotations": [ { "name": "SummarizationSetBy", "value": "Automatic" } ]
+          },
+          {
+            "name": "ลำดับ",
+            "dataType": "int64",
+            "formatString": "0",
+            "sourceColumn": "ลำดับ",
+            "summarizeBy": "none",
+            "annotations": [ { "name": "SummarizationSetBy", "value": "User" } ]
+          },
+          {
+            "name": "จำนวนเหตุการณ์สะสม",
+            "dataType": "int64",
+            "formatString": "#,0",
+            "sourceColumn": "จำนวนเหตุการณ์",
+            "summarizeBy": "sum",
+            "annotations": [ { "name": "SummarizationSetBy", "value": "Automatic" } ]
+          }
+        ],
+        "partitions": [
+          {
+            "name": "dim_magnitude_band",
+            "mode": "import",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = Csv.Document(File.Contents(\"D:\\data1\\95-\\exports\\quakes\\dim_magnitude_band.csv\"),[Delimiter=\",\", Columns=3, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),",
+                "    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),",
+                "    Typed = Table.TransformColumnTypes(Headers,{{\"ช่วงขนาด\", type text}, {\"ลำดับ\", Int64.Type}, {\"จำนวนเหตุการณ์\", Int64.Type}}, \"en-US\")",
+                "in",
+                "    Typed"
+              ]
+            }
+          }
+        ],
+        "annotations": [ { "name": "PBI_ResultType", "value": "Table" } ]
+      },
+      {
+        "name": "dim_depth_band",
+        "columns": [
+          {
+            "name": "ช่วงความลึก",
+            "dataType": "string",
+            "sourceColumn": "ช่วงความลึก",
+            "sortByColumn": "ลำดับ",
+            "summarizeBy": "none",
+            "annotations": [ { "name": "SummarizationSetBy", "value": "Automatic" } ]
+          },
+          {
+            "name": "ลำดับ",
+            "dataType": "int64",
+            "formatString": "0",
+            "sourceColumn": "ลำดับ",
+            "summarizeBy": "none",
+            "annotations": [ { "name": "SummarizationSetBy", "value": "User" } ]
+          },
+          {
+            "name": "จำนวนเหตุการณ์สะสม",
+            "dataType": "int64",
+            "formatString": "#,0",
+            "sourceColumn": "จำนวนเหตุการณ์",
+            "summarizeBy": "sum",
+            "annotations": [ { "name": "SummarizationSetBy", "value": "Automatic" } ]
+          }
+        ],
+        "partitions": [
+          {
+            "name": "dim_depth_band",
+            "mode": "import",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = Csv.Document(File.Contents(\"D:\\data1\\95-\\exports\\quakes\\dim_depth_band.csv\"),[Delimiter=\",\", Columns=3, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),",
+                "    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),",
+                "    Typed = Table.TransformColumnTypes(Headers,{{\"ช่วงความลึก\", type text}, {\"ลำดับ\", Int64.Type}, {\"จำนวนเหตุการณ์\", Int64.Type}}, \"en-US\")",
+                "in",
+                "    Typed"
+              ]
+            }
+          }
+        ],
+        "annotations": [ { "name": "PBI_ResultType", "value": "Table" } ]
+      }
+    ],
+    "relationships": [
+      {
+        "name": "fact_to_dim_month",
+        "fromTable": "fact_quakes",
+        "fromColumn": "เดือน",
+        "toTable": "dim_month",
+        "toColumn": "เดือน"
+      },
+      {
+        "name": "fact_to_dim_region",
+        "fromTable": "fact_quakes",
+        "fromColumn": "ภูมิภาค",
+        "toTable": "dim_region",
+        "toColumn": "ภูมิภาค"
+      },
+      {
+        "name": "fact_to_dim_magnitude_band",
+        "fromTable": "fact_quakes",
+        "fromColumn": "ช่วงขนาด",
+        "toTable": "dim_magnitude_band",
+        "toColumn": "ช่วงขนาด"
+      },
+      {
+        "name": "fact_to_dim_depth_band",
+        "fromTable": "fact_quakes",
+        "fromColumn": "ช่วงความลึก",
+        "toTable": "dim_depth_band",
+        "toColumn": "ช่วงความลึก"
+      }
+    ],
+    "annotations": [
+      {
+        "name": "PBI_QueryOrder",
+        "value": "[\"fact_quakes\",\"dim_month\",\"dim_region\",\"dim_magnitude_band\",\"dim_depth_band\"]"
+      },
+      { "name": "__PBI_TimeIntelligenceEnabled", "value": "0" }
+    ]
+  }
+}

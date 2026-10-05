@@ -167,3 +167,74 @@ Get Data > PostgreSQL database
   คนละโครงสร้าง การกด Combine จะได้ตารางพัง ถ้าจะโหลดเองให้ใช้
   Get Data > Text/CSV ทีละไฟล์
 - ชื่อตัวแปร VAR ใน DAX ใช้ภาษาไทยไม่ได้ ต้องเป็นอักษรอังกฤษ
+
+================================================================
+USGS Earthquake Pipeline (ดึงข้อมูลผ่าน API)
+================================================================
+
+ต่างจาก pipeline โควิดตรงที่แหล่งข้อมูลเป็น REST API ไม่ใช่ไฟล์
+จึงทำเป็น incremental ETL เต็มรูปแบบ
+
+ไฟล์ที่เกี่ยวข้อง
+- dags/ml_05_usgs_quake_ingest.py   DAG ดึงข้อมูล (usgs_quake_ingest)
+- dags/ml_06_usgs_quake_marts.py    DAG สร้างตารางสรุป (usgs_quake_marts)
+- model_service/quakes.py           หน้าแดชบอร์ด /quakes + API
+
+แหล่งข้อมูล
+- USGS FDSN Event API
+  https://earthquake.usgs.gov/fdsnws/event/1/query
+- ไม่ต้องใช้ API key ไม่มีค่าใช้จ่าย
+
+จุดที่ต้องออกแบบรับข้อจำกัดของ API
+- ขอข้อมูลช่วงยาวทีเดียวไม่ได้ เซิร์ฟเวอร์ตอบ 503/504 (ทดสอบแล้ว)
+  จึงยิงทีละเดือน เดือนหนึ่งมีราว 6,500-16,500 เหตุการณ์
+- หนึ่ง request ได้สูงสุด 20,000 แถว จึงมีการแบ่งหน้าด้วย limit/offset
+- มี retry พร้อม backoff เพราะเซิร์ฟเวอร์ล้าเป็นช่วง ๆ
+
+สิ่งที่โชว์ความสามารถของ Airflow
+- schedule="@monthly" + catchup=True ให้ Airflow ไล่ backfill ย้อนหลังเอง
+  141 DAG run ตั้งแต่ ม.ค. 2015 ถึงปัจจุบัน สำเร็จทั้งหมด
+- แต่ละ run รับผิดชอบเฉพาะเดือนของตัวเองผ่าน data_interval
+- เขียนแบบ idempotent (ลบช่วงเวลานั้นก่อนแล้วใส่ใหม่) รันซ้ำได้ไม่ซ้ำข้อมูล
+- max_active_runs=3 จำกัดไม่ให้ยิง API พร้อมกันเกินไป
+
+ผลการรันจริง
+- 1,794,431 เหตุการณ์ ครอบคลุม 141 เดือนต่อเนื่อง
+- แรงที่สุด M8.8 คัมชัตคา รัสเซีย เมื่อ 29 ก.ค. 2025
+- ตั้งแต่ M6 ขึ้นไป 1,579 ครั้ง (0.09% ของทั้งหมด)
+- ภูมิภาคที่พบมากสุด California 557,783 ครั้ง
+- ความลึกเฉลี่ย 23.9 กม.
+
+ปัญหาข้อมูลจริงที่ด่านตรวจจับได้และแก้แล้ว
+- USGS ใส่ค่า sentinel -9.99 และ -5 แทน "ไม่มีค่าขนาด" ไม่ใช่ขนาดจริง
+  แปลงเป็น NULL ส่วนค่าราว -2 เป็นแผ่นดินไหวจิ๋วที่วัดได้จริง เก็บไว้
+- ชื่อรัฐเขียนทั้งแบบย่อและเต็มปนกัน (CA กับ California) ทำให้นับแยกกัน
+  รวมชื่อด้วยตาราง REGION_ALIASES ก่อนสรุป
+- ตอนทดสอบด้วย airflow dags test ไปจอง run slot ของเดือน ก.ค. 2025 ไว้
+  ทำให้เดือนนั้นไม่เคยถูกดึง ด่านตรวจ "เดือนที่ขาด" จับได้ แก้โดยลบ run นั้น
+  แล้วสร้างใหม่ผ่าน REST API พร้อมระบุ data_interval ให้ชัดเจน
+
+วิธีรัน
+1) docker compose up -d
+2) เปิด http://localhost:8080 unpause DAG usgs_quake_ingest
+   Airflow จะไล่ backfill เองจนครบทุกเดือน (ใช้เวลาราว 10 นาที)
+3) สั่งรัน usgs_quake_marts หนึ่งครั้งเพื่อสร้างตารางสรุปและไฟล์ CSV
+4) เปิดแดชบอร์ดที่ http://localhost:8001/quakes
+
+ไฟล์ CSV สำหรับ Power BI อยู่ที่ exports/quakes/
+- fact_quakes.csv         49,188 แถว ระดับ เดือน x ภูมิภาค x ช่วงขนาด x ช่วงความลึก
+- dim_month.csv           141 แถว
+- dim_region.csv          625 แถว
+- dim_magnitude_band.csv  8 แถว (มีคอลัมน์ลำดับให้ตั้ง Sort by column)
+- dim_depth_band.csv      3 แถว
+- summary_monthly.csv     141 แถว
+- strongest_events.csv    20 แถว
+
+Endpoint ที่หน้าเว็บเรียกใช้
+- GET /api/quakes/summary          ตัวเลขสรุปรวม
+- GET /api/quakes/monthly          เหตุการณ์รายเดือน
+- GET /api/quakes/magnitude-bands  การกระจายตามขนาด
+- GET /api/quakes/depth-bands      การกระจายตามความลึก
+- GET /api/quakes/regions          ภูมิภาคเรียงตามจำนวน
+- GET /api/quakes/strongest        ครั้งที่แรงที่สุด
+- GET /api/quakes/map-points       จุดสำหรับวาดแผนที่ (M6 ขึ้นไป)

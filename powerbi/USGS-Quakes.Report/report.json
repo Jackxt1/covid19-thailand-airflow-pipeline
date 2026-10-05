@@ -1,0 +1,96 @@
+{
+  "id": 0,
+  "theme": null,
+  "sections": [
+    {
+      "id": 0,
+      "name": "ReportSection1",
+      "displayName": "ภาพรวมแผ่นดินไหว",
+      "filters": "[]",
+      "ordinal": 0,
+      "visualContainers": [
+        {
+          "x": 20,
+          "y": 20,
+          "z": 0,
+          "width": 240,
+          "height": 100,
+          "config": "{\"name\":\"slicerYear\",\"layouts\":[{\"id\":0,\"position\":{\"x\":20,\"y\":20,\"z\":0,\"width\":240,\"height\":100}}],\"singleVisual\":{\"visualType\":\"slicer\",\"projections\":{\"Values\":[{\"queryRef\":\"dim_month.ปี พ.ศ.\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"m\",\"Entity\":\"dim_month\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"ปี พ.ศ.\"},\"Name\":\"dim_month.ปี พ.ศ.\"}]},\"drillFilterOtherVisuals\":true,\"objects\":{}}}",
+          "filters": "[]"
+        },
+        {
+          "x": 280,
+          "y": 20,
+          "z": 1,
+          "width": 320,
+          "height": 100,
+          "config": "{\"name\":\"cardTotal\",\"layouts\":[{\"id\":0,\"position\":{\"x\":280,\"y\":20,\"z\":1,\"width\":320,\"height\":100}}],\"singleVisual\":{\"visualType\":\"card\",\"projections\":{\"Values\":[{\"queryRef\":\"fact_quakes.เหตุการณ์ทั้งหมด\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"f\",\"Entity\":\"fact_quakes\",\"Type\":0}],\"Select\":[{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"f\"}},\"Property\":\"เหตุการณ์ทั้งหมด\"},\"Name\":\"fact_quakes.เหตุการณ์ทั้งหมด\"}]},\"drillFilterOtherVisuals\":true,\"objects\":{}}}",
+          "filters": "[]"
+        },
+        {
+          "x": 620,
+          "y": 20,
+          "z": 1,
+          "width": 300,
+          "height": 100,
+          "config": "{\"name\":\"cardMaxMag\",\"layouts\":[{\"id\":0,\"position\":{\"x\":620,\"y\":20,\"z\":1,\"width\":300,\"height\":100}}],\"singleVisual\":{\"visualType\":\"card\",\"projections\":{\"Values\":[{\"queryRef\":\"fact_quakes.ขนาดแรงที่สุด\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"f\",\"Entity\":\"fact_quakes\",\"Type\":0}],\"Select\":[{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"f\"}},\"Property\":\"ขนาดแรงที่สุด\"},\"Name\":\"fact_quakes.ขนาดแรงที่สุด\"}]},\"drillFilterOtherVisuals\":true,\"objects\":{}}}",
+          "filters": "[]"
+        },
+        {
+          "x": 940,
+          "y": 20,
+          "z": 1,
+          "width": 320,
+          "height": 100,
+          "config": "{\"name\":\"cardM6\",\"layouts\":[{\"id\":0,\"position\":{\"x\":940,\"y\":20,\"z\":1,\"width\":320,\"height\":100}}],\"singleVisual\":{\"visualType\":\"card\",\"projections\":{\"Values\":[{\"queryRef\":\"fact_quakes.เหตุการณ์ M6 ขึ้นไป\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"f\",\"Entity\":\"fact_quakes\",\"Type\":0}],\"Select\":[{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"f\"}},\"Property\":\"เหตุการณ์ M6 ขึ้นไป\"},\"Name\":\"fact_quakes.เหตุการณ์ M6 ขึ้นไป\"}]},\"drillFilterOtherVisuals\":true,\"objects\":{}}}",
+          "filters": "[]"
+        },
+        {
+          "x": 20,
+          "y": 140,
+          "z": 2,
+          "width": 1240,
+          "height": 250,
+          "config": "{\"name\":\"lineMonthly\",\"layouts\":[{\"id\":0,\"position\":{\"x\":20,\"y\":140,\"z\":2,\"width\":1240,\"height\":250}}],\"singleVisual\":{\"visualType\":\"lineChart\",\"projections\":{\"Category\":[{\"queryRef\":\"dim_month.เดือน\"}],\"Y\":[{\"queryRef\":\"fact_quakes.เหตุการณ์ทั้งหมด\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"m\",\"Entity\":\"dim_month\",\"Type\":0},{\"Name\":\"f\",\"Entity\":\"fact_quakes\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"เดือน\"},\"Name\":\"dim_month.เดือน\"},{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"f\"}},\"Property\":\"เหตุการณ์ทั้งหมด\"},\"Name\":\"fact_quakes.เหตุการณ์ทั้งหมด\"}]},\"drillFilterOtherVisuals\":true,\"objects\":{}}}",
+          "filters": "[]"
+        },
+        {
+          "x": 20,
+          "y": 410,
+          "z": 3,
+          "width": 520,
+          "height": 290,
+          "config": "{\"name\":\"barRegion\",\"layouts\":[{\"id\":0,\"position\":{\"x\":20,\"y\":410,\"z\":3,\"width\":520,\"height\":290}}],\"singleVisual\":{\"visualType\":\"barChart\",\"projections\":{\"Category\":[{\"queryRef\":\"dim_region.ภูมิภาค\"}],\"Y\":[{\"queryRef\":\"fact_quakes.เหตุการณ์ทั้งหมด\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"r\",\"Entity\":\"dim_region\",\"Type\":0},{\"Name\":\"f\",\"Entity\":\"fact_quakes\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"r\"}},\"Property\":\"ภูมิภาค\"},\"Name\":\"dim_region.ภูมิภาค\"},{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"f\"}},\"Property\":\"เหตุการณ์ทั้งหมด\"},\"Name\":\"fact_quakes.เหตุการณ์ทั้งหมด\"}],\"OrderBy\":[{\"Direction\":2,\"Expression\":{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"f\"}},\"Property\":\"เหตุการณ์ทั้งหมด\"}}}]},\"drillFilterOtherVisuals\":true,\"objects\":{}}}",
+          "filters": "[]"
+        },
+        {
+          "x": 560,
+          "y": 410,
+          "z": 4,
+          "width": 400,
+          "height": 290,
+          "config": "{\"name\":\"columnMagnitude\",\"layouts\":[{\"id\":0,\"position\":{\"x\":560,\"y\":410,\"z\":4,\"width\":400,\"height\":290}}],\"singleVisual\":{\"visualType\":\"columnChart\",\"projections\":{\"Category\":[{\"queryRef\":\"dim_magnitude_band.ช่วงขนาด\"}],\"Y\":[{\"queryRef\":\"fact_quakes.เหตุการณ์ทั้งหมด\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"b\",\"Entity\":\"dim_magnitude_band\",\"Type\":0},{\"Name\":\"f\",\"Entity\":\"fact_quakes\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"b\"}},\"Property\":\"ช่วงขนาด\"},\"Name\":\"dim_magnitude_band.ช่วงขนาด\"},{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"f\"}},\"Property\":\"เหตุการณ์ทั้งหมด\"},\"Name\":\"fact_quakes.เหตุการณ์ทั้งหมด\"}]},\"drillFilterOtherVisuals\":true,\"objects\":{}}}",
+          "filters": "[]"
+        },
+        {
+          "x": 980,
+          "y": 410,
+          "z": 5,
+          "width": 280,
+          "height": 290,
+          "config": "{\"name\":\"donutDepth\",\"layouts\":[{\"id\":0,\"position\":{\"x\":980,\"y\":410,\"z\":5,\"width\":280,\"height\":290}}],\"singleVisual\":{\"visualType\":\"donutChart\",\"projections\":{\"Category\":[{\"queryRef\":\"dim_depth_band.ช่วงความลึก\"}],\"Y\":[{\"queryRef\":\"fact_quakes.เหตุการณ์ทั้งหมด\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"d\",\"Entity\":\"dim_depth_band\",\"Type\":0},{\"Name\":\"f\",\"Entity\":\"fact_quakes\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"d\"}},\"Property\":\"ช่วงความลึก\"},\"Name\":\"dim_depth_band.ช่วงความลึก\"},{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"f\"}},\"Property\":\"เหตุการณ์ทั้งหมด\"},\"Name\":\"fact_quakes.เหตุการณ์ทั้งหมด\"}]},\"drillFilterOtherVisuals\":true,\"objects\":{}}}",
+          "filters": "[]"
+        }
+      ],
+      "config": "{}",
+      "displayOption": 1,
+      "width": 1280,
+      "height": 720
+    }
+  ],
+  "config": "{\"version\":\"5.55\",\"themeCollection\":{},\"activeSectionIndex\":0,\"defaultDrillFilterOtherVisuals\":true,\"settings\":{\"useStylableVisualContainerHeader\":true}}",
+  "layoutOptimization": 0,
+  "publicCustomVisuals": [],
+  "resourcePackages": [],
+  "filters": "[]"
+}
